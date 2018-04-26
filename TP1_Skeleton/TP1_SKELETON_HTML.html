@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>TODO in HTML5 Skeleton</title>
+<!-- CSS, JS External 정의 -->
+<link rel="stylesheet" type="text/css" href="TP1_SKELETON_CSS.css">
+<script type="text/javascript" src="TP1_SKELETON_JS.js"></script>
+</head>
+
+<body>
+	<!-- The Modal -->
+	<div id="myModal">
+        <iframe id="Add_ToDo_popup" src="AddToDo.html" ></iframe>
+  </div>
+	<article>
+		<header>
+			<!-- Header (Add ToDo 버튼, keyword 검색) -->
+			<form>
+			<button type="button" name="Add_button" id="Add_button">Add ToDo</button>
+		</form>
+			<select name="Select_day_MainHeader" class="Select_day_MainHeader">
+				<option value="" disabled selected hidden class="Add_button_first">
+					day</option>
+			</select>
+			<input type="text" name="Search_Keyword" class="Search_Keyword_input"
+			placeholder="Enter your keyword here">
+		</header>
+
+		<main>
+			<!-- Middle Bar A~D, Display Area A~D -->
+			<section id="middleBar_mon" class="middle">
+				<section class="middleTop"><strong>Mon</strong></section>
+				<section class="displayArea_mon"></section>
+			</section>
+			<!--경계선-->
+			<div class="mainLine"></div>
+
+			<section id="middleBar_tue" class="middle">
+				<section class="middleTop"><strong>Tue</strong></section>
+				<section class="displayArea_tue"></section>
+			</section>
+			<div class="mainLine"></div>
+
+			<section id="middleBar_wed" class="middle">
+				<section class="middleTop"><strong>Wed</strong></section>
+				<section class="displayArea_wed"></section>
+			</section>
+			<div class="mainLine"></div>
+
+			<section id="middleBar_thu" class="middle">
+				<section class="middleTop"><strong>Thu</strong></section>
+				<section class="displayArea_thu"></section>
+			</section>
+			<div class="mainLine"></div>
+
+			<section id="middleBar_Fri" class="middle">
+				<section class="middleTop"><strong>Fri</strong></section>
+				<section class="displayArea_Fri"></section>
+			</section>
+
+		</main>
+	</article>
+</body>
+
+</html>
