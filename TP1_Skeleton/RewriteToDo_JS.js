@@ -18,4 +18,5 @@ function Send_Item() {
   obj.title = document.getElementById("title_AddToDo").value;
   obj.content = document.getElementById("content_AddToDo").value;
   sendMessage(obj);
+  alert(obj.content);
 }
