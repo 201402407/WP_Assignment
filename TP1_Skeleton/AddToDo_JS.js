@@ -1,6 +1,6 @@
 window.onload = function() {
   document.getElementById("Close_button").onclick = function() {
-    sendMessage("Close_button_request");
+    sendMessage("AddToDo_Close_button_request");
   }
   document.getElementById("Add_button").onclick = function() {
     Send_Item();

@@ -6,13 +6,14 @@
 <title>TODO in HTML5 Skeleton</title>
 <!-- CSS, JS External 정의 -->
 <link rel="stylesheet" type="text/css" href="TP1_SKELETON_CSS.css">
-<script type="text/javascript" src="TP1_SKELETON_JS.js"></script>
+<script src="TP1_SKELETON_JS.js"></script>
 </head>
 
 <body>
 	<!-- The Modal -->
 	<div id="myModal">
-        <iframe id="Add_ToDo_popup" src="AddToDo.html" ></iframe>
+        <iframe id="Add_ToDo_popup" src="AddToDo.html" class="ToDo_popup"></iframe>
+				<iframe id="Rewrite_ToDo_popup" src="RewriteToDo.html" class="ToDo_popup"></iframe>
   </div>
 	<article>
 		<header>
@@ -27,8 +28,7 @@
 			<input type="text" name="Search_Keyword" class="Search_Keyword_input"
 			placeholder="Enter your keyword here">
 		</header>
-
-		<main id="main_list">
+		<main>
 			<!-- Middle Bar A~D, Display Area A~D -->
 			<section id="middleBar_mon" class="middle">
 				<section class="middleTop"><strong>Mon</strong></section>
