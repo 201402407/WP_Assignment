@@ -25,20 +25,10 @@ function messageHandlerAdd(e) {
       break;
     default:
     var workListBlock = e.data;
-      switch (workListBlock.day) {
-        case "Monday":
-        case "Tuesday":
-        case "Wednesday":
-        case "Thursday":
-        case "Friday":
-          Add_Block_List(workListBlock);
-          break;
-        default:
-          alert("haha..");
-          break;
-      }
-      Add_Todo_Close();
-      break;
+    var temp = Add_Block_div(workListBlock);
+    Add_Block_List(workListBlock, temp);
+    Add_Todo_Close();
+    break;
   }
 }
 
@@ -62,7 +52,7 @@ function Rewrite_Todo_Close() {
   document.getElementById("Rewrite_ToDo_popup").style.display = "none";
 }
 
-function Add_Block_List(ListBlock_obj) {
+function Add_Block_div(ListBlock_obj) {
   var create_block = document.createElement("div");
   create_block.className = "BlockSetting";
   create_block.id = ListBlock_obj.day.concat("_", ListBlock_obj.title, "_", ListBlock_obj.content);
@@ -97,32 +87,35 @@ function Add_Block_List(ListBlock_obj) {
   var create_block_title = document.createTextNode(ListBlock_obj.title);
   create_block_titleNode.appendChild(create_block_title);
   create_block.appendChild(create_block_titleNode);
+  return create_block;
+}
 
+function Add_Block_List(ListBlock_obj, Block_div) {
   switch (ListBlock_obj.day) {
     case "Monday":
       Monday_list.push(ListBlock_obj);
       var Monday_area = document.getElementById("BlockArea_mon");
-      Monday_area.appendChild(create_block);
+      Monday_area.appendChild(Block_div);
       break;
     case "Tuesday":
       Tuesday_list.push(ListBlock_obj);
       var Tuesday_area = document.getElementById("BlockArea_tue");
-      Tuesday_area.appendChild(create_block);
+      Tuesday_area.appendChild(Block_div);
       break;
     case "Wednesday":
       Wednesday_list.push(ListBlock_obj);
       var Wednesday_area = document.getElementById("BlockArea_wed");
-      Wednesday_area.appendChild(create_block);
+      Wednesday_area.appendChild(Block_div);
       break;
     case "Thursday":
       Thursday_list.push(ListBlock_obj);
       var Thursday_area = document.getElementById("BlockArea_thu");
-      Thursday_area.appendChild(create_block);
+      Thursday_area.appendChild(Block_div);
       break;
     case "Friday":
       Friday_list.push(ListBlock_obj);
       var Friday_area = document.getElementById("BlockArea_fri");
-      Friday_area.appendChild(create_block);
+      Friday_area.appendChild(Block_div);
       break;
     default:
       alert("haha..");
@@ -131,16 +124,40 @@ function Add_Block_List(ListBlock_obj) {
   }
 
   function Rewrite_Block_List(block_obj, rank, element_obj) { // div id 변경 및 div 위치 변경.
-    var last_block_array = [element_obj.day, element_obj.title, element_obj.content];
-    var last_block_array_id = last_block_array.join("_");
-    var last_block_array_div = document.getElementById(last_block_array_id);
-    var last_element_array = Block_Find(last_block_array);
-    if((rank == last_element_array[1]) && (block_obj.day == element_obj.day)) {
-      array_to_day_list(element_obj.day).splice(rank, 1, block_obj);
-      last_block_array_div.id = block_obj.day.concat("_", block_obj.title, "_", block_obj.content);
-      last_block_array_div.childNodes[1].innerHTML = block_obj.title;
+    var array_to_last_block_day = array_to_day_list(element_obj.day);
+    var array_to_new_block_day = array_to_day_list(block_obj.day);
+    var new_block_div = Add_Block_div(block_obj);
+    var last_Div_Find_array = Div_Find(element_obj);
+    var last_block_Block_Find_array = Block_Find(last_Div_Find_array[0]);
+    var insert_Div_Find_array = Div_Find(array_to_new_block_day[rank]);
+
+    if(block_obj.day == element_obj.day) {
+      if(rank == last_block_Block_Find_array[1]) {
+        array_to_last_block_day.splice(rank, 1, block_obj);
+        last_Div_Find_array[2].parentNode.replaceChild(new_block_div, last_Div_Find_array[2]);
+      }
+      else if(rank < last_block_Block_Find_array[1]) {
+        array_to_last_block_day.splice(last_block_Block_Find_array[1], 1);
+        array_to_last_block_day.splice(rank, 0, block_obj);
+        last_Div_Find_array[2].parentNode.removeChild(last_Div_Find_array[2]);
+        insert_Div_Find_array[2].parentNode.insertBefore(new_block_div, insert_Div_Find_array[2]);
+      }
+      else {
+        array_to_last_block_day.splice(last_block_Block_Find_array[1], 1);
+        array_to_last_block_day.splice(rank, 0, block_obj);
+        last_Div_Find_array[2].parentNode.removeChild(last_Div_Find_array[2]);
+        insertAfter(new_block_div, insert_Div_Find_array[2]);
+      }
     }
     Rewrite_Todo_Close();
+  }
+
+  function insertAfter(new_div, ref_div) {
+    if (!!ref_div.nextSibling) {
+      ref_div.parentNode.insertBefore(new_div, ref_div.nextSibling);
+    } else {
+      ref_div.parentNode.appendChild(new_div);
+    }
   }
 
   function array_to_day_list(day_string) {
@@ -164,8 +181,13 @@ function Add_Block_List(ListBlock_obj) {
     array_to_day_list(Block_array[0].day).splice(Block_array[1], 1);
 }
 
-  var Div_Find = function(Div_id_string) {
-
+  function Div_Find(obj) {
+    var block_array = [obj.day, obj.title, obj.content];
+    var block_array_id = block_array.join("_");
+    var block_array_div = document.getElementById(block_array_id);
+    var temp = [];
+    temp = [block_array, block_array_id, block_array_div];
+    return temp;
   }
 
   function Block_Find(Block_list_Array) {
