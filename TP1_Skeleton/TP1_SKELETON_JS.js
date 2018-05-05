@@ -123,30 +123,45 @@ function Add_Block_List(ListBlock_obj, Block_div) {
     }
   }
 
-  function Rewrite_Block_List(block_obj, rank, element_obj) { // div id 변경 및 div 위치 변경.
+  function Rewrite_Block_List(block_obj, rank, element_obj) { // 수정
     var array_to_last_block_day = array_to_day_list(element_obj.day);
     var array_to_new_block_day = array_to_day_list(block_obj.day);
     var new_block_div = Add_Block_div(block_obj);
     var last_Div_Find_array = Div_Find(element_obj);
     var last_block_Block_Find_array = Block_Find(last_Div_Find_array[0]);
-    var insert_Div_Find_array = Div_Find(array_to_new_block_day[rank]);
 
-    if(block_obj.day == element_obj.day) {
-      if(rank == last_block_Block_Find_array[1]) {
+    if(block_obj.day == element_obj.day) { // 수정한 날짜가 이전과 같으면
+      var insert_Div_Find_array = Div_Find(array_to_new_block_day[rank]);
+      if(rank == last_block_Block_Find_array[1]) { // 우선순위도 같으면
         array_to_last_block_day.splice(rank, 1, block_obj);
         last_Div_Find_array[2].parentNode.replaceChild(new_block_div, last_Div_Find_array[2]);
       }
-      else if(rank < last_block_Block_Find_array[1]) {
+      else if(rank < last_block_Block_Find_array[1]) { // 날짜는 같고, 우선순위가 이전보다 높다면
         array_to_last_block_day.splice(last_block_Block_Find_array[1], 1);
         array_to_last_block_day.splice(rank, 0, block_obj);
         last_Div_Find_array[2].parentNode.removeChild(last_Div_Find_array[2]);
         insert_Div_Find_array[2].parentNode.insertBefore(new_block_div, insert_Div_Find_array[2]);
       }
-      else {
+      else { // 날짜는 같고, 우선순위가 이전보다 낮다면
         array_to_last_block_day.splice(last_block_Block_Find_array[1], 1);
         array_to_last_block_day.splice(rank, 0, block_obj);
         last_Div_Find_array[2].parentNode.removeChild(last_Div_Find_array[2]);
         insertAfter(new_block_div, insert_Div_Find_array[2]);
+      }
+    }
+    else { // 날짜를 변경했을 때
+      if(rank == array_to_new_block_day.length) { // 다른 날짜의 맨 마지막으로 이동시키려면
+        array_to_new_block_day.push(block_obj);
+        array_to_last_block_day.splice(last_block_Block_Find_array[1], 1);
+        last_Div_Find_array[2].parentNode.removeChild(last_Div_Find_array[2]);
+        Add_Block_List(block_obj, new_block_div);
+      }
+      else {
+        var insert_Div_Find_array = Div_Find(array_to_new_block_day[rank]);
+        array_to_last_block_day.splice(last_block_Block_Find_array[1], 1);
+        array_to_new_block_day.splice(rank, 0, block_obj);
+        last_Div_Find_array[2].parentNode.removeChild(last_Div_Find_array[2]);
+        insert_Div_Find_array[2].parentNode.insertBefore(new_block_div, insert_Div_Find_array[2]);
       }
     }
     Rewrite_Todo_Close();

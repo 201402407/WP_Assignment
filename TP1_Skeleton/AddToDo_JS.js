@@ -12,6 +12,8 @@ function sendMessage(obj) {
 }
 
 function Send_Item() {
+  document.getElementById("title_AddToDo").removeAttribute("value");
+  document.getElementById("content_AddToDo").removeAttribute("value");
   var send_target = document.getElementById("Select_day_AddToDo");
   var obj = {};
   obj.day = send_target.options[send_target.selectedIndex].value;
