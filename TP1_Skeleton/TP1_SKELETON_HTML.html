@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 
 <head>
 <meta charset="UTF-8">
@@ -15,57 +15,64 @@
         <iframe id="Add_ToDo_popup" src="AddToDo.html" class="ToDo_popup"></iframe>
 				<iframe id="Rewrite_ToDo_popup" src="RewriteToDo.html" class="ToDo_popup"></iframe>
   </div>
-	<article>
+	<main>
 		<header>
 			<!-- Header (Add ToDo 버튼, keyword 검색) -->
 			<form>
 			<button type="button" name="Add_button" id="Add_button">Add ToDo</button>
 		</form>
-			<select name="Select_day_MainHeader" class="Select_day_MainHeader">
-				<option value="" disabled selected hidden class="Add_button_first">
+			<button type="button" name="button" id="reset_button">reset</button>
+			<select name="Select_day_MainHeader" class="Select_day_MainHeader" id="Search_day">
+				<option class="Add_button_first" value="All" selected>
 					day</option>
+				<option value="Monday">Monday</option>
+				<option value="Tuesday">Tuesday</option>
+				<option value="Wednesday">Wednesday</option>
+				<option value="Thursday">Thursday</option>
+				<option value="Friday">Friday</option>
 			</select>
-			<input type="text" name="Search_Keyword" class="Search_Keyword_input"
+			<input type="text" name="Search_Keyword" class="Search_Keyword_input" id="Search_Keyword_input" value=""
 			placeholder="Enter your keyword here">
 		</header>
-		<main>
+
+	<article><h6>empty</h6>
 			<!-- Middle Bar A~D, Display Area A~D -->
-			<section id="middleBar_mon" class="middle">
-				<section class="middleTop"><strong>Mon</strong></section>
-				<section class="displayArea_mon" id="BlockArea_mon"></section>
+			<section id="middleBar_mon" class="middle"><h6>empty</h6>
+				<section class="middleTop"><strong>Mon</strong><h6>empty</h6></section>
+				<section class="displayArea_mon" id="BlockArea_mon"><h6>empty</h6></section>
 
 			</section>
 			<!--경계선-->
 			<div class="mainLine"></div>
 
-			<section id="middleBar_tue" class="middle">
-				<section class="middleTop"><strong>Tue</strong></section>
-				<section class="displayArea_tue" id="BlockArea_tue"></section>
+			<section id="middleBar_tue" class="middle"><h6>empty</h6>
+				<section class="middleTop"><strong>Tue</strong><h6>empty</h6></section>
+				<section class="displayArea_tue" id="BlockArea_tue"><h6>empty</h6></section>
 
 			</section>
 			<div class="mainLine"></div>
 
-			<section id="middleBar_wed" class="middle">
-				<section class="middleTop"><strong>Wed</strong></section>
-				<section class="displayArea_wed" id="BlockArea_wed"></section>
+			<section id="middleBar_wed" class="middle"><h6>empty</h6>
+				<section class="middleTop"><strong>Wed</strong><h6>empty</h6></section>
+				<section class="displayArea_wed" id="BlockArea_wed"><h6>empty</h6></section>
 
 			</section>
 			<div class="mainLine"></div>
 
-			<section id="middleBar_thu" class="middle">
-				<section class="middleTop"><strong>Thu</strong></section>
-				<section class="displayArea_thu" id="BlockArea_thu"></section>
+			<section id="middleBar_thu" class="middle"><h6>empty</h6>
+				<section class="middleTop"><strong>Thu</strong><h6>empty</h6></section>
+				<section class="displayArea_thu" id="BlockArea_thu"><h6>empty</h6></section>
 
 			</section>
 			<div class="mainLine"></div>
 
-			<section id="middleBar_Fri" class="middle">
-				<section class="middleTop"><strong>Fri</strong></section>
-				<section class="displayArea_Fri" id="BlockArea_fri"></section>
+			<section id="middleBar_Fri" class="middle"><h6>empty</h6>
+				<section class="middleTop"><strong>Fri</strong><h6>empty</h6></section>
+				<section class="displayArea_Fri" id="BlockArea_fri"><h6>empty</h6></section>
 
 			</section>
-		</main>
-	</article>
+		</article>
+	</main>
 </body>
 
 </html>

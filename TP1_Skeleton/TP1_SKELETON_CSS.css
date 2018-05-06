@@ -12,12 +12,19 @@ body{
 	padding: 20px 30px 20px 30px;
 }
 
-article{
+main {
 	background-color: #ffffff;
 	height: 100%;
 	border-style: none;
 }
 
+article {
+	background-color: #ffffff;
+	height: 90%;
+	width: 800px;
+	margin: auto;
+	padding: 10px;
+}
 /* Header Start */
 header{
 	background-color: #ffc000;
@@ -39,12 +46,17 @@ header{
 	border: 1px solid gray;
 }
 
-body article header .Search_Keyword_input {
+#Search_day {
+	width: 58px;
+	border-radius: 5px;
+	height: 25px;
+}
+#Search_Keyword_input {
 	text-align: left;
 	position: relative;
 	height: 28px;
 	width: 180px;
-	margin-right: -47%;
+	margin-right: -42%;
 	text-indent: 10px;
 	border-radius: 10px;
 	border: 0.5px solid gray;
@@ -62,12 +74,9 @@ body article header .Select_day {
 /* Header End */
 
 /* Main Start */
-main{
-	background-color: #ffffff;
-	height: 90%;
-	width: 800px;
-	margin: auto;
-	padding: 10px;
+
+h6 {
+	display: none;
 }
 
 .middle{
@@ -128,8 +137,9 @@ main{
 .BlockSetting {
 	text-align: center;
 	width: 90%;
-	height: 100px;
+	height: 90px;
 	margin-bottom: 5px;
+	margin-left: 6px;
 	background-color: white;
 	border: 2px solid black;
 	display: inline-block;
@@ -165,6 +175,7 @@ iframe {
   font-size: 28px;
   font-weight: bold;
 }
+
 .close:hover,
 .close:focus {
   color: black;
