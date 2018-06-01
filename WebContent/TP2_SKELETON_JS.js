@@ -6,9 +6,10 @@ var Friday_list = new Array();
 var day_list = [Monday_list, Tuesday_list, Wednesday_list, Thursday_list, Friday_list];
 
 window.onload = function() {
-  loadJQuery();
+ 
   document.getElementById("Add_button").onclick = function() {
-        document.getElementById("Add_ToDo_popup").style.display = "block";
+	  loadJQuery();
+	  document.getElementById("Add_ToDo_popup").style.display = "block";
 
         window.removeEventListener("message", messageHandlerRewrite, true);
         window.addEventListener("message", messageHandlerAdd, true);
@@ -65,7 +66,8 @@ function messageHandlerAdd(e) {
         default:
         break;
     }
-    
+    	
+    Add_Button_send_data(workListBlock);	
     Add_Block_List(workListBlock, temp);
     Add_Todo_Close();
     break;
@@ -123,7 +125,7 @@ function Add_Block_div(ListBlock_obj) {
       default:
       break;
   }
-
+  
   create_block_closeImage.onclick = function() {
     var parent = create_block_closeImage.parentNode;
     var parentId = parent.id.split("_");
@@ -145,7 +147,7 @@ function Add_Block_div(ListBlock_obj) {
     window.addEventListener("message", messageHandlerRewrite, true);
     }
   }
-  Add_button_data_send(ListBlock_obj);
+  
   var create_block_titleNode = document.createElement("p");
   var create_block_title = document.createTextNode(ListBlock_obj.title);
 
@@ -155,8 +157,7 @@ function Add_Block_div(ListBlock_obj) {
   return create_block;
 }
 
-function Add_button_data_send(obj) {
-	
+function Add_Button_send_data(obj) {
 	jQuery.ajaxSettings.traditional = true;
 	
 	$.ajaxSetup({
@@ -175,7 +176,6 @@ function Add_button_data_send(obj) {
 	  success: function(success) {
 		  if(success) {
 			  alert("전송완료");
-			  alert(success);
 			  //location.href="DataList.jsp";
 		  }
 		  else {
@@ -190,7 +190,6 @@ function Add_button_data_send(obj) {
 	  }
 	});
 }
-
 function Add_Block_List(ListBlock_obj, Block_div) {
   switch (ListBlock_obj.day) {
     case "Monday":
