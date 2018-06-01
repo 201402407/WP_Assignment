@@ -46,7 +46,6 @@ function messageHandlerAdd(e) {
       break;
     default:
     var workListBlock = e.data;
-    var temp = Add_Block_div(workListBlock);
     switch (workListBlock.day) {
       case "Monday":
         workListBlock.rank = Monday_list.length;
@@ -66,7 +65,7 @@ function messageHandlerAdd(e) {
         default:
         break;
     }
-    	
+    var temp = Add_Block_div(workListBlock);
     Add_Button_send_data(workListBlock);	
     Add_Block_List(workListBlock, temp);
     Add_Todo_Close();
@@ -106,24 +105,12 @@ function Add_Block_div(ListBlock_obj) {
   create_block_closeImage.id = create_block.id;
   create_block.appendChild(create_block_closeImage);
 
-  switch (ListBlock_obj.day) {
-    case "Monday":
-      ListBlock_obj.rank = Monday_list.length;
-      break;
-    case "Tuesday":
-      ListBlock_obj.rank = Tuesday_list.length;
-      break;
-    case "Wednesday":
-      ListBlock_obj.rank = Wednesday_list.length;
-      break;
-    case "Thursday":
-      ListBlock_obj.rank = Thursday_list.length;
-      break;
-    case "Friday":
-      ListBlock_obj.rank = Friday_list.length;
-      break;
-      default:
-      break;
+  var checkbox_block = $("<input type='checkbox' id='check' name='check_block' value='check_block'>");
+  $(create_block).append(checkbox_block);
+
+  checkbox_block.onclick = function(event) {
+	  alert(event.target.ClassName);
+	  alert(event.target.nodeName);
   }
   
   create_block_closeImage.onclick = function() {
@@ -136,7 +123,7 @@ function Add_Block_div(ListBlock_obj) {
   }
 
   create_block.onclick = function(event) {
-    if(event.target != create_block_closeImage) {
+    if(event.target != create_block_closeImage && event.target.name != "check_block") {
     document.getElementById("Rewrite_ToDo_popup").style.display = "block";
     var myBlockId = create_block.id.split("_");
     myBlockId = myBlockId.concat(ListBlock_obj.rank);
@@ -145,7 +132,8 @@ function Add_Block_div(ListBlock_obj) {
 
     window.removeEventListener("message", messageHandlerAdd, true);
     window.addEventListener("message", messageHandlerRewrite, true);
-    }
+    	}
+
   }
   
   var create_block_titleNode = document.createElement("p");
