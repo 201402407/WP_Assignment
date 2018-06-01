@@ -4,7 +4,7 @@
     <%@page import="java.util.*"%>
     <%@page import="java.net.URLEncoder"%>
 	<%@page errorPage="error.jsp" %>
-
+	<%@page import="java.text.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -43,7 +43,7 @@
 				
 				FileReader fr = new FileReader(filePath); //파일읽기객체생성
 				BufferedReader br = new BufferedReader(fr); //버퍼리더객체생성
-
+				
 				String line = null;  
 				while((line=br.readLine()) != null) { //라인단위 읽기
 			    out.println(line + "<br>"); 
@@ -139,12 +139,32 @@
 				break;
 				
 		}
+	%>
+		
+		<%
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd ");
+		String today = formatter.format(new Date());
+		
+		Date date = new Date();
+		String getTodayLabel[] = {"일", "월", "화", "수", "목", "금", "토"};
+		String TodayLabel = getTodayLabel[date.getDay()];
+		today = today + TodayLabel + " ";
+		
+		SimpleDateFormat formatter2 = new SimpleDateFormat("HH:mm");
+		String time = formatter2.format(new Date());
+		today = today + time;
+		%>
+		
+	<% 	
 		PrintWriter req;
 		try{
-			req = response.getWriter();
-			String dat = day + "_" + title + "_" + content + "_" + rank;
-			req.print(dat);
-			response.flushBuffer();
+			
+			response.setContentType("text/html;charset=utf-8"); // 인코딩 타입설정.
+			req = response.getWriter(); // response(응답 객체)에 Writer 추가.
+			String dat = day + "_" + title + "_" + content + "_" + rank; // 전송할 문자열.
+			req.println(dat); // 전송할 문자열 적음 (첫째 줄)
+			req.println(today);
+			response.flushBuffer(); // 전송.
 		}
 		catch(IOException e){
 			e.printStackTrace();

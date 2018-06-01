@@ -157,7 +157,7 @@ function Add_Block_div(ListBlock_obj) {
   return create_block;
 }
 
-function Add_Button_send_data(obj) {
+function Add_Button_send_data(obj) { // 데이터 전송 함수. ajax.
 	jQuery.ajaxSettings.traditional = true;
 	
 	$.ajaxSetup({
@@ -173,23 +173,35 @@ function Add_Button_send_data(obj) {
 			"content" : obj.content,
 			"rank" : obj.rank + 1
 		  },
+	  dataType : "text",
 	  success: function(success) {
-		  if(success) {
+		  if(success) { // 전송 완료 시.
 			  alert("전송완료");
-			  //location.href="DataList.jsp";
+			  var str = success.split("\n"); // 데이터 가져오기 성공.
+			  last_rewrite(str[1]);
 		  }
 		  else {
 			  alert("잠시 후에 시도해주세요.");
 		  }
 	  },
 	  error: function(xhr, request,error) {
-		//  location.href="DataList.jsp";
+		//location.href="DataList.jsp";
+		  alert("실패하였습니다.");
 		  alert(xhr.status);
 		  alert("message:"+request.responseText);
-		  alert("실패하였습니다.");
+		  
 	  }
 	});
 }
+
+function last_rewrite(string_date) {
+	var last_rewrite = document.getElementById("last_rewrite");
+	var last_rewrite_strong = document.createElement("strong");
+	var last_rewrite_text = document.createTextNode(string_date);
+	last_rewrite_strong.appendChild(last_rewrite_text);
+	last_rewrite.appendChild(last_rewrite_strong);
+}
+
 function Add_Block_List(ListBlock_obj, Block_div) {
   switch (ListBlock_obj.day) {
     case "Monday":
