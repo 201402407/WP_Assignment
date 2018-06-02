@@ -5,8 +5,8 @@
 <meta charset="UTF-8">
 <title>TODO in HTML5 Skeleton</title>
 <!-- CSS, JS External 정의 -->
-<link rel="stylesheet" type="text/css" href="TP2_SKELETON_CSS.css">
-<script src="TP2_SKELETON_JS.js"></script>
+<link rel="stylesheet" type="text/css" href="TP2_SKELETON_CSS.css?ver=1">
+<script src="TP2_SKELETON_JS.js?=ver1"></script>
 </head>
 
 <body>
@@ -21,7 +21,7 @@
 			<form>
 			<button type="button" name="Add_button" id="Add_button">Add ToDo</button>
 		</form>
-			최종수정 : <span id="last_rewrite"></span>
+			<span id="last_rewrite">최종수정 :<strong id="last_rewrite_block"></strong></span>
 			<button type="button" name="button" id="reset_button">reset</button>
 			<select name="Select_day_MainHeader" class="Select_day_MainHeader" id="Search_day">
 				<option class="Add_button_first" value="All" selected>
@@ -34,6 +34,7 @@
 			</select>
 			<input type="text" name="Search_Keyword" class="Search_Keyword_input" id="Search_Keyword_input" value=""
 			placeholder="Enter your keyword here">
+			<button type="button" name="button" id="check_delete_button">delete</button>
 		</header>
 
 	<article><h6>empty</h6>

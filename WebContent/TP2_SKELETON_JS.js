@@ -113,7 +113,7 @@ function Add_Block_div(ListBlock_obj) {
 	  alert(event.target.nodeName);
   }
   
-  create_block_closeImage.onclick = function() {
+  var closeImage_click = create_block_closeImage.onclick = function() {
     var parent = create_block_closeImage.parentNode;
     var parentId = parent.id.split("_");
     parentId = parentId.concat(ListBlock_obj.rank);
@@ -130,6 +130,14 @@ function Add_Block_div(ListBlock_obj) {
     var rewrite_send_block = Block_Find(myBlockId);
     sendRewriteMessage(rewrite_send_block);
 
+  document.getElementById("check_delete_button").onclick = function(event) {
+	  if($("input:checkbox[name='check_block']").is(":checked")) {
+		  closeImage_click();
+	  }
+
+	  
+  }
+  
     window.removeEventListener("message", messageHandlerAdd, true);
     window.addEventListener("message", messageHandlerRewrite, true);
     	}
@@ -183,12 +191,8 @@ function Add_Button_send_data(obj) { // 데이터 전송 함수. ajax.
 }
 
 function last_rewrite(string_date) {
-	var last_rewrite = document.getElementById("last_rewrite");
-	var last_rewrite_strong = document.createElement("strong");
-	var last_rewrite_text = document.createTextNode(string_date);
-	last_rewrite_strong.appendChild(last_rewrite_text);
-	last_rewrite.appendChild(last_rewrite_strong);
-}
+	$("#last_rewrite_block").text(string_date);
+	}
 
 function Add_Block_List(ListBlock_obj, Block_div) {
   switch (ListBlock_obj.day) {
