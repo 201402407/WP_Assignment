@@ -25,6 +25,31 @@ window.onload = function() {
   document.getElementById("reset_button").onclick = function() {
     All_of_Block();
   }
+  
+  document.getElementById("check_delete_button").onclick = function(event) {
+	  if($("input:checkbox[name='check_block']").is(":checked").length == 0) {
+		  return;
+	  }
+	  
+	  // alert($("input:checkbox[name='check_block']:checked").length);
+	  
+	  var items = [];
+	  $("input:checkbox[name='check_block']:checked").each(function () {
+	      items.push(this.id);
+	  });
+	  
+	  for(var i = 0; i < items.length; i++) {
+		  alert(items[i]); 
+		  var parent = document.getElementById(items[i]).parentNode;
+		  
+		  parentId = parent.id.concat("_", document.getElementById(items[i]).value);
+		  parentId = parentId.split("_");
+		  var Delete_Block = Block_Find(parentId);
+		  Delete_Block_List(Delete_Block);
+		  parent.parentNode.removeChild(parent);
+		  
+	  }
+  }
 }
 
 function loadJQuery() {
@@ -105,13 +130,16 @@ function Add_Block_div(ListBlock_obj) {
   create_block_closeImage.id = create_block.id;
   create_block.appendChild(create_block_closeImage);
 
-  var checkbox_block = $("<input type='checkbox' id='check' name='check_block' value='check_block'>");
-  $(create_block).append(checkbox_block);
-
-  checkbox_block.onclick = function(event) {
-	  alert(event.target.ClassName);
-	  alert(event.target.nodeName);
-  }
+  //var checkbox_block = $("<input type='checkbox' id='check' name='check_block' value='check_block'>");
+  
+  //$("#check").prop("checked", true);
+  //$(create_block).append(checkbox_block);
+  $(create_block).append($('<input/>', {
+	  type: 'checkbox',
+      id: ListBlock_obj.day.concat("_", ListBlock_obj.rank),
+      name: 'check_block',
+      value: ListBlock_obj.rank,
+  }));
   
   var closeImage_click = create_block_closeImage.onclick = function() {
     var parent = create_block_closeImage.parentNode;
@@ -129,20 +157,12 @@ function Add_Block_div(ListBlock_obj) {
     myBlockId = myBlockId.concat(ListBlock_obj.rank);
     var rewrite_send_block = Block_Find(myBlockId);
     sendRewriteMessage(rewrite_send_block);
-
-  document.getElementById("check_delete_button").onclick = function(event) {
-	  if($("input:checkbox[name='check_block']").is(":checked")) {
-		  closeImage_click();
-	  }
-
-	  
-  }
   
     window.removeEventListener("message", messageHandlerAdd, true);
     window.addEventListener("message", messageHandlerRewrite, true);
     	}
-
   }
+  
   
   var create_block_titleNode = document.createElement("p");
   var create_block_title = document.createTextNode(ListBlock_obj.title);
@@ -172,7 +192,7 @@ function Add_Button_send_data(obj) { // 데이터 전송 함수. ajax.
 	  dataType : "text",
 	  success: function(success) {
 		  if(success) { // 전송 완료 시.
-			  alert("전송완료");
+		//	  alert("전송완료");
 			  var str = success.split("\n"); // 데이터 가져오기 성공.
 			  last_rewrite(str[1]);
 		  }
@@ -192,7 +212,7 @@ function Add_Button_send_data(obj) { // 데이터 전송 함수. ajax.
 
 function last_rewrite(string_date) {
 	$("#last_rewrite_block").text(string_date);
-	}
+}
 
 function Add_Block_List(ListBlock_obj, Block_div) {
   switch (ListBlock_obj.day) {
