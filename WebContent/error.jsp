@@ -13,13 +13,6 @@
 error_reporting(E_ALL);
 
 ini_set("display_errors", 1);
-
-
-
-$string = "Hello World ! <br/>" 
-
-echo $string
-
 ?>
 에러가 발생하였습니다!!<br><br>
 에러 메시지: <%= exception.getMessage() %>

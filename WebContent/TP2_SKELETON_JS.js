@@ -5,8 +5,10 @@ var Thursday_list = new Array();
 var Friday_list = new Array();
 var day_list = [Monday_list, Tuesday_list, Wednesday_list, Thursday_list, Friday_list];
 
+// HTML 실행 시 항상 작동 가능.
 window.onload = function() {
  
+	// 메인 페이지에서 Add_button 클릭 시.
   document.getElementById("Add_button").onclick = function() {
 	  loadJQuery();
 	  document.getElementById("Add_ToDo_popup").style.display = "block";
@@ -22,16 +24,17 @@ window.onload = function() {
                 Search_Block_List(Search_Keyword_input.value, day_value);
               }
             });
+   
+  // reset_button 클릭 시.
   document.getElementById("reset_button").onclick = function() {
     All_of_Block();
   }
   
+  // delete_button 클릭 시. (체크 한 것들 제거)
   document.getElementById("check_delete_button").onclick = function(event) {
 	  if($("input:checkbox[name='check_block']").is(":checked").length == 0) {
 		  return;
 	  }
-	  
-	  // alert($("input:checkbox[name='check_block']:checked").length);
 	  
 	  var items = [];
 	  $("input:checkbox[name='check_block']:checked").each(function () {
@@ -39,19 +42,21 @@ window.onload = function() {
 	  });
 	  
 	  for(var i = 0; i < items.length; i++) {
-		  alert(items[i]); 
 		  var parent = document.getElementById(items[i]).parentNode;
 		  
-		  parentId = parent.id.concat("_", document.getElementById(items[i]).value);
+		  var parentId = parent.id.concat("_", document.getElementById(items[i]).value);
 		  parentId = parentId.split("_");
+		  alert(parentId);
 		  var Delete_Block = Block_Find(parentId);
 		  Delete_Block_List(Delete_Block);
 		  parent.parentNode.removeChild(parent);
 		  
+		  delete_send_data(Delete_Block[0]);
 	  }
   }
 }
 
+// JQuery javascript에서 실행하게 함.
 function loadJQuery() {
     var oScript = document.createElement("script");
     oScript.type = "text/javascript";
@@ -60,10 +65,12 @@ function loadJQuery() {
     document.getElementsByTagName("head")[0].appendChild(oScript);
 }
 
+// 수정을 하기 위해 rewriteToDo.html에 메세지 요청 냄.
 function sendRewriteMessage(obj) {
   document.getElementById("Rewrite_ToDo_popup").contentWindow.postMessage(obj,"*");
 }
 
+// AddToDo로부터 받은 메세지.
 function messageHandlerAdd(e) {
   switch (e.data) {
     case "AddToDo_Close_button_request":
@@ -73,19 +80,19 @@ function messageHandlerAdd(e) {
     var workListBlock = e.data;
     switch (workListBlock.day) {
       case "Monday":
-        workListBlock.rank = Monday_list.length;
+        workListBlock.rank = Monday_list.length + 1;
         break;
       case "Tuesday":
-        workListBlock.rank = Tuesday_list.length;
+        workListBlock.rank = Tuesday_list.length + 1;
         break;
       case "Wednesday":
-        workListBlock.rank = Wednesday_list.length;
+        workListBlock.rank = Wednesday_list.length + 1;
         break;
       case "Thursday":
-        workListBlock.rank = Thursday_list.length;
+        workListBlock.rank = Thursday_list.length + 1;
         break;
       case "Friday":
-        workListBlock.rank = Friday_list.length;
+        workListBlock.rank = Friday_list.length + 1;
         break;
         default:
         break;
@@ -98,6 +105,7 @@ function messageHandlerAdd(e) {
   }
 }
 
+// RewriteToDo로부터 받은 메세지.
 function messageHandlerRewrite(e) {
   switch (e.data) {
     case "Rewrite_Close_button_request":
@@ -111,29 +119,31 @@ function messageHandlerRewrite(e) {
   }
 }
 
+// Add_button 프레임 닫는 함수.
 function Add_Todo_Close() {
   document.getElementById("Add_ToDo_popup").style.display = "none";
 }
+
+// Rewrite_button 프레임 닫는 함수.
 function Rewrite_Todo_Close() {
   document.getElementById("Rewrite_ToDo_popup").style.display = "none";
 }
 
+// 메인 페이지에 Block의 div태그 생성하는 함수. obj를 인자로 한다.
 function Add_Block_div(ListBlock_obj) {
   var create_block = document.createElement("div");
   create_block.className = "BlockSetting";
   create_block.style.display = "block";
   create_block.id = ListBlock_obj.day.concat("_", ListBlock_obj.title, "_", ListBlock_obj.content);
 
+  // X 이미지 생성.
   var create_block_closeImage = document.createElement("img");
   create_block_closeImage.src = "img/delete.png";
   create_block_closeImage.className = "create_block_closeImage";
   create_block_closeImage.id = create_block.id;
   create_block.appendChild(create_block_closeImage);
 
-  //var checkbox_block = $("<input type='checkbox' id='check' name='check_block' value='check_block'>");
-  
-  //$("#check").prop("checked", true);
-  //$(create_block).append(checkbox_block);
+  // 체크박스 생성.
   $(create_block).append($('<input/>', {
 	  type: 'checkbox',
       id: ListBlock_obj.day.concat("_", ListBlock_obj.rank),
@@ -141,20 +151,25 @@ function Add_Block_div(ListBlock_obj) {
       value: ListBlock_obj.rank,
   }));
   
-  var closeImage_click = create_block_closeImage.onclick = function() {
+  // X 버튼 클릭 시 닫기.
+  	create_block_closeImage.onclick = function() {
     var parent = create_block_closeImage.parentNode;
     var parentId = parent.id.split("_");
     parentId = parentId.concat(ListBlock_obj.rank);
     var Delete_Block = Block_Find(parentId);
     Delete_Block_List(Delete_Block);
     parent.parentNode.removeChild(parent);
+    
+    delete_send_data(Delete_Block[0]);
   }
 
+  // X버튼과 check버튼을 제외한 블록 클릭 시 수정창 표시.
   create_block.onclick = function(event) {
     if(event.target != create_block_closeImage && event.target.name != "check_block") {
     document.getElementById("Rewrite_ToDo_popup").style.display = "block";
     var myBlockId = create_block.id.split("_");
     myBlockId = myBlockId.concat(ListBlock_obj.rank);
+    alert(myBlockId);
     var rewrite_send_block = Block_Find(myBlockId);
     sendRewriteMessage(rewrite_send_block);
   
@@ -173,6 +188,7 @@ function Add_Block_div(ListBlock_obj) {
   return create_block;
 }
 
+// Add_button으로 인한 데이터 전송.
 function Add_Button_send_data(obj) { // 데이터 전송 함수. ajax.
 	jQuery.ajaxSettings.traditional = true;
 	
@@ -184,15 +200,15 @@ function Add_Button_send_data(obj) { // 데이터 전송 함수. ajax.
 	  type: 'get',
 	  url: "./DataList.jsp",
 	  data:  {
+		  	"type" : "add",
 			"day" : obj.day,
 			"title" : obj.title,
 			"content" : obj.content,
-			"rank" : obj.rank + 1
+			"rank" : obj.rank
 		  },
 	  dataType : "text",
 	  success: function(success) {
 		  if(success) { // 전송 완료 시.
-		//	  alert("전송완료");
 			  var str = success.split("\n"); // 데이터 가져오기 성공.
 			  last_rewrite(str[1]);
 		  }
@@ -210,10 +226,50 @@ function Add_Button_send_data(obj) { // 데이터 전송 함수. ajax.
 	});
 }
 
+// 서버에 가서 데이터를 제거하는 함수.
+function delete_send_data(obj) {
+jQuery.ajaxSettings.traditional = true;
+	
+	$.ajaxSetup({
+	    scriptCharset: "utf-8",
+	    contentType: "application/json; charset=utf-8"
+	});
+	$.ajax({
+	  type: 'get',
+	  url: "./DataList.jsp",
+	  data:  {
+		  	"type" : "delete",
+			"day" : obj.day,
+			"title" : obj.title,
+			"content" : obj.content,
+			"rank" : obj.rank
+		  },
+	  dataType : "text",
+	  success: function(success) {
+		  if(success) { // 전송 완료 시.
+			  alert("전송완료");
+			  var str = success.split("\n"); // 데이터 가져오기 성공.
+			  alert(str[0]);
+			  last_rewrite(str[1]);
+		  }
+		  else {
+			  alert("잠시 후에 시도해주세요.");
+		  }
+	  },
+	  error: function(xhr, request,error) {
+		 // location.href="DataList.jsp";
+		  alert("실패하였습니다.");
+		  alert(xhr.status);
+	  }
+	});
+}
+
+// 최종 수정시간 표시.
 function last_rewrite(string_date) {
 	$("#last_rewrite_block").text(string_date);
 }
 
+// Add_button으로 인해 발생. Array에 넣고, div를 메인 페이지에 출력하게 함.
 function Add_Block_List(ListBlock_obj, Block_div) {
   switch (ListBlock_obj.day) {
     case "Monday":
@@ -247,7 +303,82 @@ function Add_Block_List(ListBlock_obj, Block_div) {
     }
   }
 
-function Rewrite_Block_List(block_obj, rank, element_obj) { // 수정
+// 수정하는 함수.
+function Rewrite_Block_List(block_obj, rank, element_obj) { // 수정. rank는 배열의 index. rank 확인.
+	
+	var temp = "";
+	jQuery.ajaxSettings.traditional = true;
+	
+	$.ajaxSetup({
+	    scriptCharset: "utf-8",
+	    contentType: "application/json; charset=utf-8"
+	});
+	$.ajax({
+	  type: 'get',
+	  url: "./DataList.jsp",
+	  data:  {
+		  	"type" : "delete",
+			"day" : element_obj.day,
+			"title" : element_obj.title,
+			"content" : element_obj.content,
+			"rank" : element_obj.rank
+		  },
+	  dataType : "text",
+	  success: function(success) {
+		  if(success) { // 전송 완료 시.
+			  
+			  var str = success.split("\n"); // 데이터 가져오기 성공.
+			  temp = str[0];
+			//  console.log(temp);
+			  last_rewrite(str[1]);  
+			  jQuery.ajaxSettings.traditional = true;
+				$.ajaxSetup({
+					   scriptCharset: "utf-8",
+					   contentType: "application/json; charset=utf-8"
+					});
+					$.ajax({
+					  type: 'get',
+					  url: "./DataList.jsp",
+					  data:  {
+						  	"type" : "add",
+							"day" : block_obj.day,
+							"title" : block_obj.title,
+							"content" : block_obj.content,
+							"rank" : block_obj.rank
+						  },
+					  dataType : "text",
+					  success: function(success) {
+						  if(success) { // 전송 완료 시.
+						//	  alert("전송완료");
+							  var str = success.split("\n"); // 데이터 가져오기 성공.
+							  console.log(str[0]);
+							  last_rewrite(str[1]);
+						  }
+						  else {
+							  alert("잠시 후에 시도해주세요.");
+						  }
+					  },
+					  error: function(xhr, request,error) {
+						 // location.href="DataList.jsp";
+						  alert("실패하였습니다.ㅋㅋ");
+						  alert(xhr.status);
+					  }
+					});
+		  }
+		  else {
+			  alert("잠시 후에 시도해주세요.ㅋ");
+		  } 
+	  },
+	  error: function(xhr, request,error) {
+		 // location.href="DataList.jsp";
+		  alert("실패하였습니다.");
+		  alert(xhr.status);
+	  }
+	});  
+	//console.log(block_obj.day + ", " + block_obj.title + " , " + block_obj.content + " , " + block_obj.rank);
+	
+	
+
     var array_to_last_block_day = array_to_day_list(element_obj.day);
     var array_to_new_block_day = array_to_day_list(block_obj.day);
     var new_block_div = Add_Block_div(block_obj);
@@ -275,10 +406,10 @@ function Rewrite_Block_List(block_obj, rank, element_obj) { // 수정
     }
     else { // 날짜를 변경했을 때
       if(rank == array_to_new_block_day.length) { // 다른 날짜의 맨 마지막으로 이동시키려면
-        array_to_new_block_day.push(block_obj);
         array_to_last_block_day.splice(last_block_Block_Find_array[1], 1);
         last_Div_Find_array[2].parentNode.removeChild(last_Div_Find_array[2]);
         Add_Block_List(block_obj, new_block_div);
+        
       }
       else {
         var insert_Div_Find_array = Div_Find(array_to_new_block_day[rank]);
@@ -288,15 +419,21 @@ function Rewrite_Block_List(block_obj, rank, element_obj) { // 수정
         insert_Div_Find_array[2].parentNode.insertBefore(new_block_div, insert_Div_Find_array[2]);
       }
     }
+    
     for(var i = 0; i < array_to_last_block_day.length; i++) {
-      array_to_last_block_day[i].rank = i;
+      array_to_last_block_day[i].rank = i + 1;
+      Div_Find(array_to_last_block_day[i])[2].value = array_to_last_block_day[i].rank; 
+   //   console.log(array_to_last_block_day[i].rank + " , " + Div_Find(array_to_last_block_day[i])[2].value);
     }
     for(var i = 0; i < array_to_new_block_day.length; i++) {
-      array_to_new_block_day[i].rank = i;
-    }
-    Rewrite_Todo_Close();
+      array_to_new_block_day[i].rank = i + 1;
+      Div_Find(array_to_new_block_day[i])[2].value = array_to_new_block_day[i].rank;
+    //  console.log(array_to_new_block_day[i].rank + " , " + Div_Find(array_to_new_block_day[i])[2].value);
+    } 
+    Rewrite_Todo_Close(); 
   }
 
+// 해당 블록이 있는지, 존재하는 블록만 표시.
 function Search_Block_List(Search_Keyword_string, day_value) {
     All_of_None();
     if(day_value == "All") {
@@ -321,6 +458,7 @@ function Search_Block_List(Search_Keyword_string, day_value) {
     }
 }
 
+// 모든 블록 안보이게.
 function All_of_None() {
     for(var i = 0; i < day_list.length; i++) {
       var temp = day_list[i];
@@ -331,6 +469,7 @@ function All_of_None() {
     }
   }
 
+// 모든 블록 보이게
   function All_of_Block() {
       for(var i = 0; i < day_list.length; i++) {
         var temp = day_list[i];
@@ -349,6 +488,7 @@ function insertAfter(new_div, ref_div) {
     }
   }
 
+// day 변수를 통해 해당 날짜의 Array 리턴.
 function array_to_day_list(day_string) {
     switch (day_string) {
       case "Monday":
@@ -366,10 +506,13 @@ function array_to_day_list(day_string) {
         break;
     }
   }
+
+// Block의 Array에서 해당 블록 제거하는 함수.
 function Delete_Block_List(Block_array) {
     array_to_day_list(Block_array[0].day).splice(Block_array[1], 1);
 }
 
+// Div태그를 찾는 함수.
 function Div_Find(obj) {
     var block_array = [obj.day, obj.title, obj.content, obj.rank];
     var block_array_id = obj.day.concat("_", obj.title, "_", obj.content);
@@ -379,6 +522,7 @@ function Div_Find(obj) {
     return temp;
   }
 
+// 해당 블록이 Array에 존재하면, Array안에 있는 객체와 해당 인덱스(rank - 1 ) 리턴. [day, title, content, rank]
 function Block_Find(Block_list_Array) {
     var temp = [];
     switch (Block_list_Array[0]) {

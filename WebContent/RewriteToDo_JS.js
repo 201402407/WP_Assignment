@@ -13,7 +13,8 @@ function messageHandler(e) {
   var obj = e.data;
   View_Item(obj);
   document.getElementById("Rewrite_button").onclick = function() {
-    var sendobj = [Send_RewriteItem()[0], Send_RewriteItem()[1], obj[0]];
+	var temp = Send_RewriteItem();
+    var sendobj = [temp[0], temp[1], obj[0]];
     sendMessage(sendobj);
   }
 }
