@@ -35,25 +35,38 @@ window.onload = function() {
 	  if($("input:checkbox[name='check_block']").is(":checked").length == 0) {
 		  return;
 	  }
+	  var length = $("input:checkbox[name='check_block']:checked").length;
+	  var items = []; // 체크한 div 넣기.
 	  
-	  var items = [];
-	  $("input:checkbox[name='check_block']:checked").each(function () {
-	      items.push(this.id);
-	  });
-	  
-	  for(var i = 0; i < items.length; i++) {
-		  var parent = document.getElementById(items[i]).parentNode;
+	  for(var i = 0; i < length; i++) {
 		  
-		  var parentId = parent.id.concat("_", document.getElementById(items[i]).value);
+		  var check_div = $("input:checkbox[name='check_block']:checked")[0];
+		  //console.log(check_div.id);
+		  var parent = check_div.parentNode;
+		  //console.log(parent.id);
+	      var parentId = parent.id.concat("_", check_div.value);
 		  parentId = parentId.split("_");
-		  alert(parentId);
+		  //console.log(parentId);
 		  var Delete_Block = Block_Find(parentId);
-		  Delete_Block_List(Delete_Block);
-		  parent.parentNode.removeChild(parent);
-		  
+		  //console.log(Delete_Block[0].rank);
 		  delete_send_data(Delete_Block[0]);
+	
+		  parent.parentNode.removeChild(parent);
+		  //console.log(Delete_Block[0].rank + ", " + Delete_Block[1] + ", " + Delete_Block[0].day+ ", " + Delete_Block[0].title);
+		  Delete_Block_List(Delete_Block);
+		  Sort_Rank_Array(parentId[0]); // parentId[0] == day
+			
 	  }
   }
+}
+function wait(msecs)
+{
+var start = new Date().getTime();
+var cur = start;
+while(cur - start < msecs)
+{
+cur = new Date().getTime();
+}
 }
 
 // JQuery javascript에서 실행하게 함.
@@ -146,7 +159,7 @@ function Add_Block_div(ListBlock_obj) {
   // 체크박스 생성.
   $(create_block).append($('<input/>', {
 	  type: 'checkbox',
-      id: ListBlock_obj.day.concat("_", ListBlock_obj.rank),
+      id: ListBlock_obj.day,
       name: 'check_block',
       value: ListBlock_obj.rank,
   }));
@@ -160,6 +173,7 @@ function Add_Block_div(ListBlock_obj) {
     Delete_Block_List(Delete_Block);
     parent.parentNode.removeChild(parent);
     
+    Sort_Rank_Array(ListBlock_obj.day);
     delete_send_data(Delete_Block[0]);
   }
 
@@ -206,6 +220,7 @@ function Add_Button_send_data(obj) { // 데이터 전송 함수. ajax.
 			"content" : obj.content,
 			"rank" : obj.rank
 		  },
+	  async: false,
 	  dataType : "text",
 	  success: function(success) {
 		  if(success) { // 전송 완료 시.
@@ -218,7 +233,7 @@ function Add_Button_send_data(obj) { // 데이터 전송 함수. ajax.
 	  },
 	  error: function(xhr, request,error) {
 		//location.href="DataList.jsp";
-		  alert("실패하였습니다.");
+		  alert("add failed");
 		  alert(xhr.status);
 		  alert("message:"+request.responseText);
 		  
@@ -226,7 +241,87 @@ function Add_Button_send_data(obj) { // 데이터 전송 함수. ajax.
 	});
 }
 
-// 서버에 가서 데이터를 제거하는 함수.
+/*function sort_data(type) {
+	if(type === "sort") {
+		console.log(type);
+		$.ajaxSetup({
+		    scriptCharset: "utf-8",
+		    contentType: "application/json; charset=utf-8"
+		});
+		$.ajax({
+		  type: 'get',
+		  url: "./DataList.jsp",
+		  data:  {
+			  	"type" : type,
+			  	"day" : "sort",
+				"title" : "sort",
+				"content" : "sort",
+				"rank" : "sort"
+			  },
+		  dataType : "text",
+		  success: function(success) {
+			  if(success) { // 전송 완료 시.
+				  alert("sort success");
+				  var str = success.split("\n"); // 데이터 가져오기 성공.
+				  last_rewrite(str[1]);
+			  }
+			  else {
+				  alert("잠시 후에 시도해주세요.");
+			  }
+		  },
+		  error: function(xhr, request,error) {
+			  console.log(type);
+			//  location.href="DataList.jsp";
+			  alert("sort failed.");
+			  alert(xhr.status);
+			  alert(request);
+		  }
+		});
+	}
+}
+
+// 서버에 가서 데이터를 삭제하는 함수. (체크 삭제)
+ /*function check_delete_send_data(obj, type) {
+	if(type === "check_delete") { 
+	jQuery.ajaxSettings.traditional = true;
+		
+	$.ajaxSetup({
+	    scriptCharset: "utf-8",
+	    contentType: "application/json; charset=utf-8"
+	});
+	$.ajax({
+	  type: 'get',
+	  url: "./DataList.jsp",
+	  data:  {
+		  	"type" : "delete",
+			"day" : obj.day,
+			"title" : obj.title,
+			"content" : obj.content,
+			"rank" : obj.rank
+		  },
+	  async: false,
+	  dataType : "text",
+	  success: function(success) {
+		  if(success) { // 전송 완료 시.
+			  //alert("check_delete success");
+			  //var str = success.split("\n"); // 데이터 가져오기 성공.
+			  console.log(success);
+			  last_rewrite(str[1]);
+		  }
+		  else {
+			  alert("잠시 후에 시도해주세요.");
+		  }
+	  },
+	  error: function(xhr, request,error) {
+		 // location.href="DataList.jsp";
+		  alert("check_delete failed");
+		  alert(xhr.status);
+	  }
+	});
+	}
+ } */
+
+// 서버에 가서 데이터를 제거하는 함수. 단일 삭제만.
 function delete_send_data(obj) {
 jQuery.ajaxSettings.traditional = true;
 	
@@ -244,12 +339,12 @@ jQuery.ajaxSettings.traditional = true;
 			"content" : obj.content,
 			"rank" : obj.rank
 		  },
+	  async: false,
 	  dataType : "text",
 	  success: function(success) {
 		  if(success) { // 전송 완료 시.
-			  alert("전송완료");
+			  alert("delete success.");
 			  var str = success.split("\n"); // 데이터 가져오기 성공.
-			  alert(str[0]);
 			  last_rewrite(str[1]);
 		  }
 		  else {
@@ -258,7 +353,7 @@ jQuery.ajaxSettings.traditional = true;
 	  },
 	  error: function(xhr, request,error) {
 		 // location.href="DataList.jsp";
-		  alert("실패하였습니다.");
+		  alert("delete success failed.");
 		  alert(xhr.status);
 	  }
 	});
@@ -349,9 +444,9 @@ function Rewrite_Block_List(block_obj, rank, element_obj) { // 수정. rank는 �
 					  dataType : "text",
 					  success: function(success) {
 						  if(success) { // 전송 완료 시.
-						//	  alert("전송완료");
+							  alert("rewrite success.");
 							  var str = success.split("\n"); // 데이터 가져오기 성공.
-							  console.log(str[0]);
+							  //console.log(str[0]);
 							  last_rewrite(str[1]);
 						  }
 						  else {
@@ -360,7 +455,7 @@ function Rewrite_Block_List(block_obj, rank, element_obj) { // 수정. rank는 �
 					  },
 					  error: function(xhr, request,error) {
 						 // location.href="DataList.jsp";
-						  alert("실패하였습니다.ㅋㅋ");
+						  alert("rewrite failed.");
 						  alert(xhr.status);
 					  }
 					});
@@ -375,7 +470,7 @@ function Rewrite_Block_List(block_obj, rank, element_obj) { // 수정. rank는 �
 		  alert(xhr.status);
 	  }
 	});  
-	//console.log(block_obj.day + ", " + block_obj.title + " , " + block_obj.content + " , " + block_obj.rank);
+	
 	
 	
 
@@ -419,20 +514,29 @@ function Rewrite_Block_List(block_obj, rank, element_obj) { // 수정. rank는 �
         insert_Div_Find_array[2].parentNode.insertBefore(new_block_div, insert_Div_Find_array[2]);
       }
     }
-    
-    for(var i = 0; i < array_to_last_block_day.length; i++) {
+    Sort_Rank_Array(element_obj.day);
+    Sort_Rank_Array(block_obj.day);
+  /*  for(var i = 0; i < array_to_last_block_day.length; i++) {
       array_to_last_block_day[i].rank = i + 1;
       Div_Find(array_to_last_block_day[i])[2].value = array_to_last_block_day[i].rank; 
-   //   console.log(array_to_last_block_day[i].rank + " , " + Div_Find(array_to_last_block_day[i])[2].value);
     }
     for(var i = 0; i < array_to_new_block_day.length; i++) {
       array_to_new_block_day[i].rank = i + 1;
       Div_Find(array_to_new_block_day[i])[2].value = array_to_new_block_day[i].rank;
     //  console.log(array_to_new_block_day[i].rank + " , " + Div_Find(array_to_new_block_day[i])[2].value);
-    } 
+    }  */
     Rewrite_Todo_Close(); 
   }
 
+function Sort_Rank_Array(day) {
+	for(var i = 0; i < array_to_day_list(day).length; i++) {
+		array_to_day_list(day)[i].rank = i + 1;
+		 var checkTag = document.getElementById(Div_Find(array_to_day_list(day)[i])[1]).childNodes[1];
+		 // childNode[1]이 checkbox이므로.
+	    checkTag.value = array_to_day_list(day)[i].rank;
+	    
+	}
+}
 // 해당 블록이 있는지, 존재하는 블록만 표시.
 function Search_Block_List(Search_Keyword_string, day_value) {
     All_of_None();

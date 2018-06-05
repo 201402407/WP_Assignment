@@ -6,6 +6,7 @@
     <%@page import="java.net.URLEncoder"%>
 	<%@page import="java.text.*" %>
 	<%@page import="java.nio.charset.StandardCharsets"%>
+	
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -109,7 +110,7 @@
 	}
 	
 	if(type.equals("delete")) { 
-		String filePathDelete = filePath + "\\" + rank + ".txt";
+		String filePathDelete = filePath + rank + ".txt";
 		f = new File(filePathDelete); //경로생성 
 		File f2 = new File(filePath);
 		if(f.exists()) {
@@ -117,9 +118,10 @@
 				int length = f2.list().length;
 				int a = Integer.parseInt(rank);
 				for(int i = a; i <= length; i++) {				
-					File file1 = new File(filePath + "\\" + String.valueOf(i) + ".txt");
-					File file2 = new File(filePath + "\\" + String.valueOf(i + 1) + ".txt");
+					File file1 = new File(filePath + String.valueOf(i) + ".txt");
+					File file2 = new File(filePath + String.valueOf(i + 1) + ".txt");
 					if(file2.isFile()) {
+						req.println(filePathDelete + " , " + rank + " , " + i + " , " + length + "\n");
 						BufferedReader br1 = new BufferedReader(new FileReader(file2)); //버퍼리더객체생성
 						String temp = br1.readLine();
 						file1.createNewFile();
@@ -134,8 +136,28 @@
 						break;
 					}
 				}
+				req.println(filePathDelete + " , " + rank + " , " + a + " , " + length + "\n");
 				print = "success";
 				
+			}
+			else {
+				req.println(filePathDelete + " , " + rank);
+				print = "fails";
+			}
+		}
+		else {
+			req.println(filePathDelete + " , " + rank);
+			print = "not exists";
+		}
+	req.println(print);
+	}
+	
+	if(type.equals("check_delete")) {
+		String filePathDelete = filePath + "\\" + rank + ".txt";
+		f = new File(filePathDelete); //경로생성 
+		if(f.exists()) {
+			if(f.delete()) {
+				print = "success";
 			}
 			else {
 				print = "fail";
@@ -145,6 +167,70 @@
 			print = "not exist";
 		}
 	req.println(print);
+	}
+	
+	if(type.equals("sort")) {
+		File file;
+		String sortDay[] = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
+		
+		for(int x = 0; x < sortDay.length; x++) {
+			String sortPath = request.getSession().getServletContext().getRealPath("/" + sortDay[x] + "/");
+			file = new File(sortPath);
+			if(file.exists()) { // 폴더가 존재하면
+			if(file.list().length != 0) { // 안에 파일이 존재하면
+				File fileList[] = file.listFiles();
+				int fileListtemp[] = new int[fileList.length];
+				for(int i = 0; i < fileList.length; i++) {
+					String lastfilename = fileList[i].getName();
+					lastfilename = lastfilename.substring(0, lastfilename.length() - 4);
+					if(i == 0) {
+						if(lastfilename.equals("1")) {
+							fileListtemp[0] = 2; // 이름
+							continue;
+						}
+						File file1 = new File(sortPath + "\\" + 1 + ".txt");
+						File file2 = fileList[0];
+						if(!file1.isFile()) {
+							BufferedReader br1 = new BufferedReader(new FileReader(file2)); //버퍼리더객체생성
+							String temp = br1.readLine();
+							file1.createNewFile();
+							FileWriter fw = new FileWriter(file1); //파일쓰기객체생성
+							fw.write(temp);
+							fw.close();
+							br1.close();
+							if(file2.delete()) {
+								fileListtemp[0] = 2; // 이름 
+								continue;
+							}
+						}	
+						else {
+							break;
+						}
+					}
+					else {
+						File file1 = new File(sortPath + "\\" + String.valueOf(fileListtemp[i-1]) + ".txt");
+						File file2 = fileList[i];
+						if(!file1.isFile()) {
+							BufferedReader br1 = new BufferedReader(new FileReader(file2)); //버퍼리더객체생성
+							String temp = br1.readLine();
+							file1.createNewFile();
+							FileWriter fw = new FileWriter(file1); //파일쓰기객체생성
+							fw.write(temp);
+							fw.close();
+							br1.close();
+							if(file2.delete()){
+								fileListtemp[i] = Integer.parseInt(file1.getName().substring(0, file1.getName().length() - 4)) + 1; // 이름 
+								continue;
+							}
+						}	
+						else {
+							break;
+						}
+					}
+				}
+			}
+			}
+		}
 	}
 	
 	// 최종 수정시간 추가.
@@ -157,11 +243,18 @@
 	SimpleDateFormat formatter2 = new SimpleDateFormat("HH:mm");
 	String time = formatter2.format(new Date());
 	today = today + time;
-	
-	// 출력.
 	req.println(today);
 	response.flushBuffer(); // 전송.
+	
+	// 초기화.
 	print = "";
+	type = "";
+	day = "";
+	title = "";
+	content = "";
+	rank = "";
+	filePath = "";
+	time = "";
 	%>
 </body>
 </html>

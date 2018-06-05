@@ -8,31 +8,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-<?php
-
-error_reporting(E_ALL);
-
 ini_set("display_errors", 1);
-?>
 에러가 발생하였습니다!!<br><br>
 에러 메시지: <%= exception.getMessage() %>
-<p>
-<%
-    Throwable rootCause = null;
-    if (exception instanceof ServletException) {
-        rootCause = ((ServletException)exception).getRootCause();
-    } else {
-        rootCause = exception.getCause();
-    }
-    if (rootCause != null) {
-        do {
-%>
-예외 추적: <%= rootCause.getMessage() %><br>
-<%
-            rootCause = rootCause.getCause();
-        } while(rootCause != null);
-    }
-%>
+<%= exception.getClass().getName() %>
+<%= exception.getClass().getCanonicalName() %>
 
 </body>
 </html>
