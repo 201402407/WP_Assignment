@@ -1,0 +1,77 @@
+#main_header {
+    margin-top: 30px;
+    width:800px;
+    height:50px;
+    background-color: #D2919F;
+    text-align: center;
+    font-weight: bold;
+    line-height: 50px;
+    font-family: gulim, helvetica, serif;
+    font-size: 30px;
+    color: white;
+    border: 8px double white;
+    margin-left: 210px;
+    margin-bottom: 80px;
+}
+body {
+  background-color: #F9F7F7;
+}
+strong, .MyShoesSize_block {
+  line-height: 20px;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+article {
+	height: 90%;
+	width: 800px;
+	margin: auto;
+	padding: 10px;
+}
+
+.CompareShoes {
+  background-color: white;
+}
+#CompareShoes1{
+  float: left;
+  margin-left: 14%;
+  margin-top: 100px;
+  display: inline-block;
+  width: 350px;
+	height: 400px;
+	text-align: center;
+	vertical-align: middle;
+  border: 1px solid black;
+}
+
+#CompareShoes2{
+  float: right;
+  margin-right: 14%;
+  margin-top: 100px;
+  display: inline-block;
+  width: 350px;
+	height: 400px;
+	text-align: center;
+	vertical-align: middle;
+  border: 1px solid black;
+}
+
+.MyShoes_image {
+  width: 350px;
+  height: 350px;
+  border: 1px solid black;
+  margin-top: 35px;
+  background-color: white;
+  display: inline;
+}
+
+#MyShoes1_image {
+  float: left;
+  margin-left: 14%;
+  display: inline;
+}
+#MyShoes2_image {
+  float: right;
+  margin-right: 14%;
+  display: inline;
+}
