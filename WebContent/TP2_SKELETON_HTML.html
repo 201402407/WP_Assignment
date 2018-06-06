@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="UTF-8">
+<title>TODO in HTML5 Skeleton</title>
+<!-- CSS, JS External 정의 -->
+<link rel="stylesheet" type="text/css" href="TP2_SKELETON_CSS.css">
+<script src="TP2_SKELETON_JS.js"></script>
+</head>
+
+<body>
+	<!-- The Modal -->
+	<div id="myModal">
+        <iframe id="Add_ToDo_popup" src="AddToDo.html" class="ToDo_popup"></iframe>
+				<iframe id="Rewrite_ToDo_popup" src="RewriteToDo.html" class="ToDo_popup"></iframe>
+  </div>
+	<main>
+		<header>
+			<!-- Header (Add ToDo 버튼, keyword 검색) -->
+			<form>
+			<button type="button" name="Add_button" id="Add_button">Add ToDo</button>
+		</form>
+			<span id="last_rewrite">최종수정 :<strong id="last_rewrite_block"></strong></span>
+			<button type="button" name="button" id="reset_button">reset</button>
+			<select name="Select_day_MainHeader" class="Select_day_MainHeader" id="Search_day">
+				<option class="Add_button_first" value="All" selected>
+					day</option>
+				<option value="Monday">Monday</option>
+				<option value="Tuesday">Tuesday</option>
+				<option value="Wednesday">Wednesday</option>
+				<option value="Thursday">Thursday</option>
+				<option value="Friday">Friday</option>
+			</select>
+			<input type="text" name="Search_Keyword" class="Search_Keyword_input" id="Search_Keyword_input" value=""
+			placeholder="Enter your keyword here">
+			<button type="button" name="button" id="check_delete_button">delete</button>
+		</header>
+
+	<article><h6>empty</h6>
+			<!-- Middle Bar A~D, Display Area A~D -->
+			<section id="middleBar_mon" class="middle"><h6>empty</h6>
+				<section class="middleTop"><strong>Mon</strong><h6>empty</h6></section>
+				<section class="displayArea_mon" id="BlockArea_mon"><h6>empty</h6></section>
+
+			</section>
+			<!--경계선-->
+			<div class="mainLine"></div>
+
+			<section id="middleBar_tue" class="middle"><h6>empty</h6>
+				<section class="middleTop"><strong>Tue</strong><h6>empty</h6></section>
+				<section class="displayArea_tue" id="BlockArea_tue"><h6>empty</h6></section>
+
+			</section>
+			<div class="mainLine"></div>
+
+			<section id="middleBar_wed" class="middle"><h6>empty</h6>
+				<section class="middleTop"><strong>Wed</strong><h6>empty</h6></section>
+				<section class="displayArea_wed" id="BlockArea_wed"><h6>empty</h6></section>
+
+			</section>
+			<div class="mainLine"></div>
+
+			<section id="middleBar_thu" class="middle"><h6>empty</h6>
+				<section class="middleTop"><strong>Thu</strong><h6>empty</h6></section>
+				<section class="displayArea_thu" id="BlockArea_thu"><h6>empty</h6></section>
+
+			</section>
+			<div class="mainLine"></div>
+
+			<section id="middleBar_Fri" class="middle"><h6>empty</h6>
+				<section class="middleTop"><strong>Fri</strong><h6>empty</h6></section>
+				<section class="displayArea_Fri" id="BlockArea_fri"><h6>empty</h6></section>
+
+			</section>
+		</article>
+	</main>
+</body>
+
+</html>

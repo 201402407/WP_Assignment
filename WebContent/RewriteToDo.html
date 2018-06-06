@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>TODO in HTML5 Skeleton</title>
+<!-- CSS, JS External 정의 -->
+<link rel="stylesheet" type="text/css" href="RewriteToDo_CSS.css">
+<script src="RewriteToDo_JS.js"></script>
+</head>
+<body>
+<section id="writingTransparentBorder"><h6>empty</h6></section>
+	<!-- Add ToDo Button View -->
+	<section id="writingFormContainer"><h6>empty</h6>
+		<!-- X(Close button) -->
+<img src="img/delete.png" alt="delete" id="Close_button">
+		<!-- Day select -->
+		<select name="Select_day_RewriteToDo" id="Select_day_RewriteToDo">
+			<option value="Monday" selected>Monday</option>
+			<option value="Tuesday">Tuesday</option>
+			<option value="Wednesday">Wednesday</option>
+			<option value="Thursday">Thursday</option>
+			<option value="Friday">Friday</option>
+		</select>
+		<!-- 제목과 설명 -->
+		<input type="text" name="rank_RewriteToDo" id="rank_RewriteToDo" placeholder="우선 순위">
+		<input type="text" name="title_RewriteToDo" id="title_RewriteToDo" placeholder="제목 입력">
+		<textarea id="content_RewriteToDo" placeholder="내용 입력"></textarea>
+		<form>
+		<button type="button" name="Rewrite_button" id="Rewrite_button">Done</button>
+	</form>
+	</section>
+</body>
+
+</html>
