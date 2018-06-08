@@ -1,0 +1,70 @@
+#main_header {
+    margin-top: 30px;
+    width:800px;
+    height:50px;
+    background-color: #D2919F;
+    text-align: center;
+    font-weight: bold;
+    line-height: 50px;
+    font-family: gulim, helvetica, serif;
+    font-size: 30px;
+    color: white;
+    border: 8px double white;
+    margin-left: 225px;
+    margin-bottom: 80px;
+}
+
+.join {
+  width: 600px;
+  border: 1px solid black;
+  margin-left: 25%;
+  margin-right: 25%;
+}
+
+#join_title {
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 90px;
+
+}
+
+#join_name_block {
+  font-weight: bold;
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 30px;
+}
+
+#join_size_block {
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+#join_select_block {
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 30px;
+  color: #63380C;
+}
+
+#search_shoes1 {
+  margin-top: 20px;
+  float: left;
+  margin-left: 70px;
+  margin-bottom: 30px;
+  color: #63380C;
+}
+
+#search_shoes2 {
+  margin-top: 20px;
+  float: right;
+  margin-right: 70px;
+  margin-bottom: 30px;
+  color: #63380C;
+}
+
+#Join {
+  margin-top: 50px;
+  margin-left: 44%;
+}
