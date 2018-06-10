@@ -46,6 +46,7 @@ header{
 	border-radius: 10px;
 	border: 1px solid gray;
 	margin-right: 10px;
+	cursor: pointer;
 }
 #check_delete_button{
 	font-weight: bolder;
@@ -56,8 +57,15 @@ header{
 	background-color: red;
 	border-radius: 10px;
 	border: 1px solid black;
+	cursor: pointer;
+}
+#reset_button{
+	cursor: pointer;
 }
 
+#quit_button {
+	cursor: pointer;
+}
 #last_rewrite {
 	margin-right: 10px;
 }
@@ -110,9 +118,9 @@ h6 {
 
 .displayArea_mon{
 	background-color: #cfe0e0;
-	height: 95%;
 	text-align: center;
 	vertical-align: middle;
+ 	height: 95%;
 }
 
 .displayArea_tue{
@@ -142,7 +150,30 @@ h6 {
 	text-align: center;
 	vertical-align: middle;
 }
-
+#field_mon{
+   min-height: 50px;
+   height: auto !important;
+}
+#field_tue{
+   min-height: 50px;
+   height: auto !important;
+   height: 50px
+}
+#field_wed{
+   min-height: 50px;
+   height: auto !important;
+   height: 50px
+}
+#field_thu{
+   min-height: 50px;
+   height: auto !important;
+   height: 50px
+}
+#field_fri{
+   min-height: 50px;
+   height: auto !important;
+   height: 50px
+}
 .mainLine{
 	float: left;
 	height: 100%;
@@ -151,8 +182,9 @@ h6 {
 
 .BlockSetting {
 	text-align: center;
-	width: 90%;
+	width: 130px;
 	height: 90px;
+	margin-top: 5px;
 	margin-bottom: 5px;
 	margin-left: 6px;
 	background-color: white;

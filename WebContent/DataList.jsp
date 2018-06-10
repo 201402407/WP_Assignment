@@ -38,32 +38,6 @@
 			filepath.mkdirs(); //상위 디렉토리가 존재하지 않으면 상위디렉토리부터 생성.
 		}
 		String filePathAdd = filePath + "\\" + rank + ".txt"; //생성할 파일명을 전체경로에 결합
-	//	File files[] = filepath.listFiles();
-	//	File sortfiles[];
-	/*	for(int count = 0; count == files.length; count++) {
-		for(int i = 0; i < files.length; i++) { // 파일 우선순위대로 정렬.
-			File file = files[i];
-			if(file.isFile()) {
-				BufferedReader br1 = new BufferedReader(new FileReader(file)); //버퍼리더객체생성
-				String temp[] = br1.readLine().split("_");
-				if(temp[3].equals(count + 1)) {
-					sortfiles. 
-				}
-				
-			}	
-		} 
-		}
-		for(int j = 0; j < files.length; j++) { // 파일 우선순위대로 정렬.
-			File file = files[i];
-			if(file.isFile()) {
-				BufferedReader br1 = new BufferedReader(new FileReader(file)); //버퍼리더객체생성
-				String temp[] = br1.readLine().split("_");
-				if(temp[3].equals(rank)) {
-					String temp2 = temp[0] + "_" + temp[1] + "_" + temp[2] + 
-				}
-				
-			}	
-		} */
 		try {
 			f = new File(filePathAdd); // 파일 객체 생성
 			if(f.exists()) { // 삽입.
@@ -121,7 +95,6 @@
 					File file1 = new File(filePath + String.valueOf(i) + ".txt");
 					File file2 = new File(filePath + String.valueOf(i + 1) + ".txt");
 					if(file2.isFile()) {
-						req.println(filePathDelete + " , " + rank + " , " + i + " , " + length + "\n");
 						BufferedReader br1 = new BufferedReader(new FileReader(file2)); //버퍼리더객체생성
 						String temp = br1.readLine();
 						file1.createNewFile();
@@ -136,17 +109,17 @@
 						break;
 					}
 				}
-				req.println(filePathDelete + " , " + rank + " , " + a + " , " + length + "\n");
+				
 				print = "success";
 				
 			}
 			else {
-				req.println(filePathDelete + " , " + rank);
+				
 				print = "fails";
 			}
 		}
 		else {
-			req.println(filePathDelete + " , " + rank);
+			
 			print = "not exists";
 		}
 	req.println(print);
@@ -233,6 +206,40 @@
 		}
 	}
 	
+	if(type.equals("quit")) {
+		File file;
+		String sortDay[] = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
+		for(int i = 0; i < sortDay.length; i++) {
+		String sortPath = request.getSession().getServletContext().getRealPath("/" + sortDay[i] + "/");
+		file = new File(sortPath);
+		deleteAllDirectory(file);
+		}
+	}
+	%>
+	<%!
+	public static void deleteAllDirectory(File file) { 
+		  if (file.isDirectory()) {   
+		   if (file.listFiles().length != 0) { 
+		    File[] fileList = file.listFiles();
+		    for (int i = 0; i < fileList.length; i++) {
+		     
+		     // 디렉토리이고 서브 디렉토리가 있을 경우 리커젼을 한다...
+		     deleteAllDirectory(fileList[i]);
+		     file.delete();
+		    }
+		   } else {
+		    
+		    // 파일 트리의 리프까지 도달했을때 삭제...
+		    file.delete();
+		   }
+		  } else {
+		   
+		   // 파일 일 경우 리커젼 없이 삭제...
+		   file.delete();
+		  }
+		 }
+	%>
+	<%
 	// 최종 수정시간 추가.
 	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd ");
 	String today = formatter.format(new Date());	

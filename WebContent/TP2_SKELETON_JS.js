@@ -7,10 +7,9 @@ var day_list = [Monday_list, Tuesday_list, Wednesday_list, Thursday_list, Friday
 
 // HTML 실행 시 항상 작동 가능.
 window.onload = function() {
- 
+	reload();
 	// 메인 페이지에서 Add_button 클릭 시.
   document.getElementById("Add_button").onclick = function() {
-	  loadJQuery();
 	  document.getElementById("Add_ToDo_popup").style.display = "block";
 
         window.removeEventListener("message", messageHandlerRewrite, true);
@@ -58,7 +57,106 @@ window.onload = function() {
 			
 	  }
   }
-}
+  
+// 드래그 앤 드롭
+ $(document).ready(function(){
+	 
+	 var last;
+	 var last_obj;
+	 var rewrite;
+		 $('.displayArea_mon, .displayArea_tue, .displayArea_wed, .displayArea_thu, .displayArea_fri').sortable({
+		  connectWith: '.displayArea_mon, .displayArea_tue, .displayArea_wed, .displayArea_thu, .displayArea_fri',
+		  start: function(event, ui) {
+			 // console.log($(ui.item).attr("id"));
+			  last = $(ui.item).attr("id") + "_" + $(ui.item).index();
+			  last = last.split("_");
+			//  console.log(last);
+			  last_obj = Block_Find(last);
+			//  console.log(last_obj[0], " + ", last_obj[1]);
+		    },
+		  stop: function(event, ui) {
+			//  console.log("end");
+			  rewrite = $(ui.item).attr("id");
+			  rewrite = rewrite.split("_");
+			  var temp = $(ui.item).parent().attr("id");
+			  var day;
+			//  console.log(temp);
+			  switch(temp) {
+			  case "BlockArea_mon":
+				  day = "Monday";
+				  break;
+			  case "BlockArea_tue":
+				  day = "Tuesday";
+				  break;
+			  case "BlockArea_wed":
+				  day = "Wednesday";
+				  break;
+			  case "BlockArea_thu":
+				  day = "Thursday";
+				  break;
+			  case "BlockArea_fri":
+				  day = "Friday";
+				  break;  
+			  }
+			  
+			  var rewrite_obj = {
+					  "day": day,
+					  "title": rewrite[1],
+					  "content": rewrite[2],
+					  "rank": $(ui.item).index()
+			  };
+			  
+			//  console.log("이전꺼" ,last_obj[0].day, last_obj[0].title, last_obj[0].content, last_obj[0].rank);
+			//  console.log("최근꺼" ,rewrite_obj.day, rewrite_obj.title, rewrite_obj.content, rewrite_obj.rank);
+			  Rewrite_Block_List(rewrite_obj, $(ui.item).index() - 1, last_obj[0]);
+		    }
+	  });
+	})
+	
+// 새로고침 등 새로 시작 시 이전 저장된 태그들 나오게 하는 함수.
+ function reload() {
+	 jQuery.ajaxSettings.traditional = true;
+	  	
+	  	$.ajaxSetup({
+	  	    scriptCharset: "utf-8",
+	  	    contentType: "application/json; charset=utf-8"
+	  	});
+	  	$.ajax({ // 서버 데이터 전부 삭제.
+	  	  type: 'get',
+	  	  url: "./DataList.jsp",
+	  	  data:  {
+	  		  	"type" : "quit",
+	  			"day" : "quit",
+	  			"title" : "quit",
+	  			"content" : "quit",
+	  			"rank" : "quit"
+	  		  },
+	  	  async: false,
+	  	  dataType : "text",
+	  	  success: function(success) {
+	  		  if(success) { // 전송 완료 시.
+	  			  alert("success");
+	  		  }
+	  		  else {
+	  			  alert("잠시 후에 시도해주세요.");
+	  		  }
+	  	  },
+	  	  error: function(xhr, request,error) {
+	  		//location.href="DataList.jsp";
+	  		  alert("add failed");
+	  		  alert(xhr.status);
+	  		  alert("message:"+request.responseText);
+	  		  
+	  	  }
+	  	});
+	  	window.open("about:blank","_self").close();
+	  	
+	  }
+ } 
+
+
+
+
 function wait(msecs)
 {
 var start = new Date().getTime();
@@ -68,16 +166,6 @@ while(cur - start < msecs)
 cur = new Date().getTime();
 }
 }
-
-// JQuery javascript에서 실행하게 함.
-function loadJQuery() {
-    var oScript = document.createElement("script");
-    oScript.type = "text/javascript";
-    oScript.charset = "utf-8";		  
-    oScript.src = "http://code.jquery.com/jquery-1.6.2.min.js";	
-    document.getElementsByTagName("head")[0].appendChild(oScript);
-}
-
 // 수정을 하기 위해 rewriteToDo.html에 메세지 요청 냄.
 function sendRewriteMessage(obj) {
   document.getElementById("Rewrite_ToDo_popup").contentWindow.postMessage(obj,"*");
@@ -176,7 +264,7 @@ function Add_Block_div(ListBlock_obj) {
     Sort_Rank_Array(ListBlock_obj.day);
     delete_send_data(Delete_Block[0]);
   }
-
+  $(create_block).css("cursor","pointer");
   // X버튼과 check버튼을 제외한 블록 클릭 시 수정창 표시.
   create_block.onclick = function(event) {
     if(event.target != create_block_closeImage && event.target.name != "check_block") {
@@ -191,7 +279,6 @@ function Add_Block_div(ListBlock_obj) {
     window.addEventListener("message", messageHandlerRewrite, true);
     	}
   }
-  
   
   var create_block_titleNode = document.createElement("p");
   var create_block_title = document.createTextNode(ListBlock_obj.title);
