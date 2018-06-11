@@ -6,14 +6,6 @@
     <%@page import="java.net.URLEncoder"%>
 	<%@page import="java.text.*" %>
 	<%@page import="java.nio.charset.StandardCharsets"%>
-	
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>Insert title here</title>
-</head>
-<body>
 	<%
 		request.setCharacterEncoding("UTF-8");
 		String type = request.getParameter("type");
@@ -22,16 +14,11 @@
 		String content = request.getParameter("content");
 		String rank = request.getParameter("rank");
 		String filePath = request.getSession().getServletContext().getRealPath("/" + day + "/");
-		%>
-			
-	<%
 	String print = "";
 	File f;
 	response.setContentType("text/html;charset=utf-8"); // 인코딩 타입설정.
-	PrintWriter req;
-	req = response.getWriter(); // response(응답 객체)에 Writer 추가.
- 	
- 	
+	PrintWriter req = null;
+	req = response.getWriter(); // response(응답 객체)에 Writer 추가.	
 	if(type.equals("add")) {
 		File filepath = new File(filePath); //경로생성 
 		if (!filepath.exists()) {
@@ -82,7 +69,6 @@
 			e.printStackTrace();
 		}
 	}
-	
 	if(type.equals("delete")) { 
 		String filePathDelete = filePath + rank + ".txt";
 		f = new File(filePathDelete); //경로생성 
@@ -124,7 +110,6 @@
 		}
 	req.println(print);
 	}
-	
 	if(type.equals("check_delete")) {
 		String filePathDelete = filePath + "\\" + rank + ".txt";
 		f = new File(filePathDelete); //경로생성 
@@ -141,7 +126,6 @@
 		}
 	req.println(print);
 	}
-	
 	if(type.equals("sort")) {
 		File file;
 		String sortDay[] = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
@@ -205,41 +189,49 @@
 			}
 		}
 	}
-	
-	if(type.equals("quit")) {
+	if(type.equals("reload")) {
+		// 최종수정날짜부터 표시
 		File file;
+		String reload_todayPath = request.getSession().getServletContext().getRealPath("/today/");
+		reload_todayPath = reload_todayPath + "\\today.txt";
+		file = new File(reload_todayPath);
+		if(file.exists()) {
+		BufferedReader br2 = new BufferedReader(new FileReader(file)); //버퍼리더객체생성
+		String temp = br2.readLine();
+		req.println(temp);
+		br2.close();
+		}
+		else {
+			req.println("no time.");
+		}
 		String sortDay[] = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
 		for(int i = 0; i < sortDay.length; i++) {
 		String sortPath = request.getSession().getServletContext().getRealPath("/" + sortDay[i] + "/");
 		file = new File(sortPath);
-		deleteAllDirectory(file);
+		
+		if (file.isDirectory()) {   
+			   if (file.listFiles().length != 0) { 
+			    File[] fileList = file.listFiles();
+			    for (int j = 0; j < fileList.length; j++) {
+			    	if(fileList[j].isFile()) {
+						BufferedReader br1 = new BufferedReader(new FileReader(fileList[j])); //버퍼리더객체생성
+						String file_temp = br1.readLine();
+						String lastfilename = fileList[j].getName();
+						lastfilename = lastfilename.substring(0, lastfilename.length() - 4);
+						file_temp = file_temp + "_" + lastfilename;
+						req.println(file_temp);
+						br1.close();
+			    	}
+			    }
+			   } else {
+			
+			   }
+			  } else {
+			   
+			  }
+			 }
+		return;
 		}
-	}
-	%>
-	<%!
-	public static void deleteAllDirectory(File file) { 
-		  if (file.isDirectory()) {   
-		   if (file.listFiles().length != 0) { 
-		    File[] fileList = file.listFiles();
-		    for (int i = 0; i < fileList.length; i++) {
-		     
-		     // 디렉토리이고 서브 디렉토리가 있을 경우 리커젼을 한다...
-		     deleteAllDirectory(fileList[i]);
-		     file.delete();
-		    }
-		   } else {
-		    
-		    // 파일 트리의 리프까지 도달했을때 삭제...
-		    file.delete();
-		   }
-		  } else {
-		   
-		   // 파일 일 경우 리커젼 없이 삭제...
-		   file.delete();
-		  }
-		 }
-	%>
-	<%
 	// 최종 수정시간 추가.
 	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd ");
 	String today = formatter.format(new Date());	
@@ -251,8 +243,27 @@
 	String time = formatter2.format(new Date());
 	today = today + time;
 	req.println(today);
-	response.flushBuffer(); // 전송.
+	//response.flushBuffer(); // 전송.
 	
+	// 최종 수정시간 파일에 기록.
+	String todayPath =  request.getSession().getServletContext().getRealPath("/today/");
+	File todayFile = new File(todayPath);
+	if (!todayFile.exists()) {
+		todayFile.mkdirs(); //상위 디렉토리가 존재하지 않으면 상위디렉토리부터 생성.
+	}
+	String todayfilePath = todayPath + "\\today.txt"; //생성할 파일명을 전체경로에 결합
+	todayFile = new File(todayfilePath);
+	if(todayFile.exists()) {
+		todayFile.createNewFile(); //파일 생성
+		FileWriter fw = new FileWriter(todayFile); //파일쓰기객체생성
+		fw.write(today); // 파일에 쓰기.
+		fw.close(); // FileWriter 닫기
+	}
+	else{
+		FileWriter fw = new FileWriter(todayFile); //파일쓰기객체생성
+		fw.write(today); // 파일에 쓰기.
+		fw.close(); // FileWriter 닫기
+	}
 	// 초기화.
 	print = "";
 	type = "";
@@ -263,5 +274,3 @@
 	filePath = "";
 	time = "";
 	%>
-</body>
-</html>

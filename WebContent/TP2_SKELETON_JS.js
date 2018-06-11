@@ -7,7 +7,7 @@ var day_list = [Monday_list, Tuesday_list, Wednesday_list, Thursday_list, Friday
 
 // HTML 실행 시 항상 작동 가능.
 window.onload = function() {
-	reload();
+  reload();
 	// 메인 페이지에서 Add_button 클릭 시.
   document.getElementById("Add_button").onclick = function() {
 	  document.getElementById("Add_ToDo_popup").style.display = "block";
@@ -40,18 +40,17 @@ window.onload = function() {
 	  for(var i = 0; i < length; i++) {
 		  
 		  var check_div = $("input:checkbox[name='check_block']:checked")[0];
-		  //console.log(check_div.id);
+		  
 		  var parent = check_div.parentNode;
-		  //console.log(parent.id);
+		  
 	      var parentId = parent.id.concat("_", check_div.value);
 		  parentId = parentId.split("_");
-		  //console.log(parentId);
 		  var Delete_Block = Block_Find(parentId);
-		  //console.log(Delete_Block[0].rank);
+		  
 		  delete_send_data(Delete_Block[0]);
 	
 		  parent.parentNode.removeChild(parent);
-		  //console.log(Delete_Block[0].rank + ", " + Delete_Block[1] + ", " + Delete_Block[0].day+ ", " + Delete_Block[0].title);
+		  
 		  Delete_Block_List(Delete_Block);
 		  Sort_Rank_Array(parentId[0]); // parentId[0] == day
 			
@@ -67,20 +66,20 @@ window.onload = function() {
 		 $('.displayArea_mon, .displayArea_tue, .displayArea_wed, .displayArea_thu, .displayArea_fri').sortable({
 		  connectWith: '.displayArea_mon, .displayArea_tue, .displayArea_wed, .displayArea_thu, .displayArea_fri',
 		  start: function(event, ui) {
-			 // console.log($(ui.item).attr("id"));
+			 
 			  last = $(ui.item).attr("id") + "_" + $(ui.item).index();
 			  last = last.split("_");
-			//  console.log(last);
+			  
 			  last_obj = Block_Find(last);
-			//  console.log(last_obj[0], " + ", last_obj[1]);
+			  
 		    },
 		  stop: function(event, ui) {
-			//  console.log("end");
+			
 			  rewrite = $(ui.item).attr("id");
 			  rewrite = rewrite.split("_");
 			  var temp = $(ui.item).parent().attr("id");
 			  var day;
-			//  console.log(temp);
+			
 			  switch(temp) {
 			  case "BlockArea_mon":
 				  day = "Monday";
@@ -105,10 +104,123 @@ window.onload = function() {
 					  "content": rewrite[2],
 					  "rank": $(ui.item).index()
 			  };
-			  
-			//  console.log("이전꺼" ,last_obj[0].day, last_obj[0].title, last_obj[0].content, last_obj[0].rank);
-			//  console.log("최근꺼" ,rewrite_obj.day, rewrite_obj.title, rewrite_obj.content, rewrite_obj.rank);
-			  Rewrite_Block_List(rewrite_obj, $(ui.item).index() - 1, last_obj[0]);
+			  var rank = $(ui.item).index()-1;
+			  var temp = "";
+				jQuery.ajaxSettings.traditional = true;
+				
+				$.ajaxSetup({
+				    scriptCharset: "utf-8",
+				    contentType: "application/json; charset=utf-8"
+				});
+				$.ajax({
+				  type: 'get',
+				  url: "./DataList.jsp",
+				  data:  {
+					  	"type" : "delete",
+						"day" : last_obj[0].day,
+						"title" : last_obj[0].title,
+						"content" : last_obj[0].content,
+						"rank" : last_obj[0].rank
+					  },
+					  async: false,
+				  dataType : "text",
+				  success: function(success) {
+					  if(success) { // 전송 완료 시.
+						  
+						  var str = success.split("\n"); // 데이터 가져오기 성공.
+						  temp = str[0];
+						
+						  last_rewrite(str[1]);  
+						  jQuery.ajaxSettings.traditional = true;
+							$.ajaxSetup({
+								   scriptCharset: "utf-8",
+								   contentType: "application/json; charset=utf-8"
+								});
+								$.ajax({
+								  type: 'get',
+								  url: "./DataList.jsp",
+								  data:  {
+									  	"type" : "add",
+										"day" : rewrite_obj.day,
+										"title" : rewrite_obj.title,
+										"content" : rewrite_obj.content,
+										"rank" : rewrite_obj.rank
+									  },
+								  dataType : "text",
+								  success: function(success) {
+									  if(success) { // 전송 완료 시.
+										  alert("rewrite success.");
+										  var str = success.split("\n"); // 데이터 가져오기 성공.
+										  
+										  last_rewrite(str[1]);
+									  }
+									  else {
+										  alert("잠시 후에 시도해주세요.");
+									  }
+								  },
+								  error: function(xhr, request,error) {
+									 // location.href="DataList.jsp";
+									  alert("rewrite failed.");
+									  alert(xhr.status);
+								  }
+								});
+					  }
+					  else {
+						  alert("잠시 후에 시도해주세요.ㅋ");
+					  } 
+				  },
+				  error: function(xhr, request,error) {
+					 // location.href="DataList.jsp";
+					  alert("실패하였습니다.");
+					  alert(xhr.status);
+				  }
+				});  
+				
+				
+				
+
+			    var array_to_last_block_day = array_to_day_list(last_obj[0].day);
+			    var array_to_new_block_day = array_to_day_list(rewrite_obj.day);
+			    var new_block_div = Add_Block_div(rewrite_obj);
+			    var last_Div_Find_array = Div_Find(last_obj[0]);
+			    var last_block_Block_Find_array = Block_Find(last_Div_Find_array[0]);
+
+			    if(rewrite_obj.day == last_obj[0].day) { // 수정한 날짜가 이전과 같으면
+			      var insert_Div_Find_array = Div_Find(array_to_new_block_day[rank]);
+			      if(rank == last_block_Block_Find_array[1]) { // 우선순위도 같으면
+			        array_to_last_block_day.splice(rank, 1, rewrite_obj);
+			        last_Div_Find_array[2].parentNode.replaceChild(new_block_div, last_Div_Find_array[2]);
+			      }
+			      else if(rank < last_block_Block_Find_array[1]) { // 날짜는 같고, 우선순위가 이전보다 높다면
+			        array_to_last_block_day.splice(last_block_Block_Find_array[1], 1);
+			        array_to_last_block_day.splice(rank, 0, rewrite_obj);
+			        last_Div_Find_array[2].parentNode.removeChild(last_Div_Find_array[2]);
+			        insert_Div_Find_array[2].parentNode.insertBefore(new_block_div, insert_Div_Find_array[2]);
+			      }
+			      else { // 날짜는 같고, 우선순위가 이전보다 낮다면
+			        array_to_last_block_day.splice(last_block_Block_Find_array[1], 1);
+			        array_to_last_block_day.splice(rank, 0, rewrite_obj);
+			        last_Div_Find_array[2].parentNode.removeChild(last_Div_Find_array[2]);
+			        insertAfter(new_block_div, insert_Div_Find_array[2]);
+			      }
+			    }
+			    else { // 날짜를 변경했을 때
+			      if(rank == array_to_new_block_day.length) { // 다른 날짜의 맨 마지막으로 이동시키려면
+			        array_to_last_block_day.splice(last_block_Block_Find_array[1], 1);
+			        last_Div_Find_array[2].parentNode.removeChild(last_Div_Find_array[2]);
+			        Add_Block_List(rewrite_obj, new_block_div);
+			        
+			      }
+			      else {
+			        var insert_Div_Find_array = Div_Find(array_to_new_block_day[rank]);
+			        array_to_last_block_day.splice(last_block_Block_Find_array[1], 1);
+			        array_to_new_block_day.splice(rank, 0, rewrite_obj);
+			        last_Div_Find_array[2].parentNode.removeChild(last_Div_Find_array[2]);
+			        insert_Div_Find_array[2].parentNode.insertBefore(new_block_div, insert_Div_Find_array[2]);
+			      }
+			    }
+			    Sort_Rank_Array(last_obj[0].day);
+			    Sort_Rank_Array(rewrite_obj.day);
 		    }
 	  });
 	})
@@ -125,17 +237,36 @@ window.onload = function() {
 	  	  type: 'get',
 	  	  url: "./DataList.jsp",
 	  	  data:  {
-	  		  	"type" : "quit",
-	  			"day" : "quit",
-	  			"title" : "quit",
-	  			"content" : "quit",
-	  			"rank" : "quit"
+	  		  	"type" : "reload",
+	  			"day" : "reload",
+	  			"title" : "reload",
+	  			"content" : "reload",
+	  			"rank" : "reload"
 	  		  },
 	  	  async: false,
 	  	  dataType : "text",
 	  	  success: function(success) {
 	  		  if(success) { // 전송 완료 시.
-	  			  alert("success");
+	  			
+	  			  
+	  			var str = success.split("\n"); // 데이터 가져오기 성공.
+				  last_rewrite(str[0]);
+				  var i = 1;
+				  while(str[i].replace(/^\s*/, "") != 0) {
+					
+					var reload_id = str[i].split("_");
+					var temp_obj = {
+					      "day": reload_id[0],
+						  "title": reload_id[1],
+						  "content": reload_id[2],
+						  "rank": reload_id[3]
+					  }
+					  var temp = Add_Block_div(temp_obj);	
+					    Add_Block_List(temp_obj, temp);
+					    
+					    i++;
+				  }
+	  			  
 	  		  }
 	  		  else {
 	  			  alert("잠시 후에 시도해주세요.");
@@ -143,29 +274,15 @@ window.onload = function() {
 	  	  },
 	  	  error: function(xhr, request,error) {
 	  		//location.href="DataList.jsp";
-	  		  alert("add failed");
+	  		  alert("reload failed");
 	  		  alert(xhr.status);
 	  		  alert("message:"+request.responseText);
 	  		  
 	  	  }
 	  	});
-	  	window.open("about:blank","_self").close();
-	  	
 	  }
  } 
 
-
-
-
-function wait(msecs)
-{
-var start = new Date().getTime();
-var cur = start;
-while(cur - start < msecs)
-{
-cur = new Date().getTime();
-}
-}
 // 수정을 하기 위해 rewriteToDo.html에 메세지 요청 냄.
 function sendRewriteMessage(obj) {
   document.getElementById("Rewrite_ToDo_popup").contentWindow.postMessage(obj,"*");
@@ -505,13 +622,14 @@ function Rewrite_Block_List(block_obj, rank, element_obj) { // 수정. rank는 �
 			"content" : element_obj.content,
 			"rank" : element_obj.rank
 		  },
+		  async: false,
 	  dataType : "text",
 	  success: function(success) {
 		  if(success) { // 전송 완료 시.
 			  
 			  var str = success.split("\n"); // 데이터 가져오기 성공.
 			  temp = str[0];
-			//  console.log(temp);
+			
 			  last_rewrite(str[1]);  
 			  jQuery.ajaxSettings.traditional = true;
 				$.ajaxSetup({
@@ -533,7 +651,7 @@ function Rewrite_Block_List(block_obj, rank, element_obj) { // 수정. rank는 �
 						  if(success) { // 전송 완료 시.
 							  alert("rewrite success.");
 							  var str = success.split("\n"); // 데이터 가져오기 성공.
-							  //console.log(str[0]);
+							  
 							  last_rewrite(str[1]);
 						  }
 						  else {
@@ -716,12 +834,14 @@ function Div_Find(obj) {
 // 해당 블록이 Array에 존재하면, Array안에 있는 객체와 해당 인덱스(rank - 1 ) 리턴. [day, title, content, rank]
 function Block_Find(Block_list_Array) {
     var temp = [];
+    
     switch (Block_list_Array[0]) {
       case "Monday":
         for(var i = 0; i < Monday_list.length; i++) {
             if(Monday_list[i].title == Block_list_Array[1]) {
               if(Monday_list[i].content == Block_list_Array[2]) {
                 if(Monday_list[i].rank == Block_list_Array[3])
+                	
                 temp = [Monday_list[i], i];
                 break;
               }
@@ -733,6 +853,7 @@ function Block_Find(Block_list_Array) {
           if(Tuesday_list[i].title == Block_list_Array[1]) {
             if(Tuesday_list[i].content == Block_list_Array[2]) {
               if(Tuesday_list[i].rank == Block_list_Array[3])
+            	  
               temp = [Tuesday_list[i], i];
               break;
             }
@@ -744,6 +865,7 @@ function Block_Find(Block_list_Array) {
           if(Wednesday_list[i].title == Block_list_Array[1]) {
             if(Wednesday_list[i].content == Block_list_Array[2]) {
               if(Wednesday_list[i].rank == Block_list_Array[3])
+            	  
               temp = [Wednesday_list[i], i];
               break;
             }
@@ -755,6 +877,7 @@ function Block_Find(Block_list_Array) {
           if(Thursday_list[i].title == Block_list_Array[1]) {
             if(Thursday_list[i].content == Block_list_Array[2]) {
               if(Thursday_list[i].rank == Block_list_Array[3])
+            	  
               temp = [Thursday_list[i], i];
               break;
             }
@@ -766,6 +889,7 @@ function Block_Find(Block_list_Array) {
           if(Friday_list[i].title == Block_list_Array[1]) {
             if(Friday_list[i].content == Block_list_Array[2]) {
               if(Friday_list[i].rank == Block_list_Array[3])
+            	  
               temp = [Friday_list[i], i];
               break;
             }
@@ -776,5 +900,6 @@ function Block_Find(Block_list_Array) {
         alert("hahaha..");
         break;
     }
+    
     return temp;
   }
