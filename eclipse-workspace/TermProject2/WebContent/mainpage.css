@@ -1,0 +1,80 @@
+#main_header {
+    margin-top: 30px;
+    width:800px;
+    height:50px;
+    background-color: #D2919F;
+    text-align: center;
+    font-weight: bold;
+    line-height: 50px;
+    font-family: gulim, helvetica, serif;
+    font-size: 30px;
+    color: white;
+    border: 8px double white;
+    margin-left: 210px;
+    margin-bottom: 80px;
+    cursor: pointer;
+}
+body {
+  background-color: #F3EDED;
+}
+
+#LoginButton, .LoginButton {
+  margin-top: 100px;
+  height: 50px;
+  line-height: 20px;
+  text-align: center;
+  width: 300px;
+  border: 1px solid black;
+  font-family: helvetica, serif;
+  margin: 0 auto;
+  margin-bottom: 50px;
+  cursor: pointer;
+}
+
+#CheckSizeButton, .CheckSizeButton {
+  height: 80px;
+  line-height: 20px;
+  text-align: center;
+  width: 400px;
+  border: 1px solid black;
+  font-weight: bold;
+  font-family: "고딕";
+  margin: 0 auto;
+  margin-bottom: 50px;
+  cursor: pointer;
+}
+
+#MakerHomepageButton, .MakerHomepageButton {
+  height: 50px;
+  line-height: 20px;
+  text-align: center;
+  width: 300px;
+  border: 1px solid black;
+  font-family: helvetica, serif;
+  margin: 0 auto;
+  margin-bottom: 50px;
+  cursor: pointer;
+}
+
+#InstgramButton, .InstgramButton {
+  height: 50px;
+  line-height: 20px;
+  text-align: center;
+  width: 300px;
+  border: 1px solid black;
+  font-family: helvetica, serif;
+  margin: 0 auto;
+  margin-bottom: 50px;
+  cursor: pointer;
+}
+
+#CartShoesButton, .CartShoesButton {
+  height: 50px;
+  line-height: 20px;
+  text-align: center;
+  width: 300px;
+  border: 1px solid black;
+  font-family: helvetica, serif;
+  margin: 0 auto;
+  cursor: pointer;
+}
