@@ -9,7 +9,9 @@
   request.setCharacterEncoding("UTF-8");
   String ID = request.getParameter("ID");
   String Shoes1 = request.getParameter("shoes1");
+  String Shoes1_size = request.getParameter("shoes1_size");
   String Shoes2 = request.getParameter("shoes2");
+  String Shoes2_size = request.getParameter("shoes2_size");
   String LoginFilePath = request.getSession().getServletContext().getRealPath("/member/");
   File MemberList = new File(LoginFilePath); //경로생성
   if (!MemberList.exists()) {
@@ -23,7 +25,9 @@
 				PrintWriter pw = new PrintWriter(fw);
 				pw.println("ID:" + ID); // 파일에 ID쓰기.
 				pw.println("Shoes1:" + Shoes1); // 파일에 현재 ID의 주인이 정한 신발 1개 쓰기.
+				pw.println("Shoes1 size:" + Shoes1_size); // 파일에 현재 ID의 주인이 정한 신발 1개 쓰기.
 				pw.println("Shoes2:" + Shoes2); // 파일에 현재 ID의 주인이 정한 신발 1개 쓰기.
+				pw.println("Shoes2 size:" + Shoes2_size); // 파일에 현재 ID의 주인이 정한 신발 1개 쓰기.
 				pw.flush(); // 파일에 기록. 여기까지가 입력 첫 줄.
 				pw.close(); // FileWriter 닫기 
 					
