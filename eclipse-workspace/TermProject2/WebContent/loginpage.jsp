@@ -7,10 +7,14 @@
   <title>슈즈 사이즈 닷컴</title>
   <link rel="stylesheet" type="text/css" href="loginpage.css?ver=1">
   <script src="loginpage.js"></script>
+  <script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
+  <script src="http://code.jquery.com/ui/1.8.23/jquery-ui.min.js"></script>
 </head>
 <body>
   <!-- 홈페이지의 홈버튼. 홈페이지 제목 -->
-   <div id="main_header_click"><header id="main_header">슈즈 사이즈 닷컴</header></div>
+   <div id="main_header_click">
+   <img alt="not valid" src="./img/mainlogo.jpg" id="main_header">
+   </div>
    <!-- 로그인 공간 -->
    <article class="LoginButton">
      <div id="Login_header">로그인</div>

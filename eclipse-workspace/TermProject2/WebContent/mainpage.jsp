@@ -7,16 +7,20 @@
   <!-- 탭 제목 -->
   <title>슈즈 사이즈 닷컴</title>
   <!-- css, js 링크 -->
-  <link rel="stylesheet" type="text/css" href="mainpage.css?ver=1">
-  <script src="mainpage.js?ver=1"></script>
+  <link rel="stylesheet" type="text/css" href="mainpage.css">
+  <script src="mainpage.js"></script>
+  <script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
+  <script src="http://code.jquery.com/ui/1.8.23/jquery-ui.min.js"></script>
 </head>
 <body>
   <!-- 홈페이지의 홈버튼. 홈페이지 제목 -->
-   <div id="main_header_click"><header id="main_header">슈즈 사이즈 닷컴</header></div>
+   <div id="main_header_click">
+   <img alt="not valid" src="./img/mainlogo.jpg" id="main_header">
+   </div>
    <%
       if(session.getAttribute("sessionID") == null) {
         %>
-          <span><h2>로그인이 필요합니다.</h2></span>
+          <span id="LoginNeedMessage"> 로그인이 필요합니다.</span>
         <%
       }
   
