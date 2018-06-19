@@ -7,13 +7,13 @@
     cursor: pointer;
 }
 
-
-strong, .MyShoesSize_block {
+.MyShoesSize_block {
   line-height: 20px;
   text-align: center;
   font-weight: bold;
   margin-bottom: 30px;
 }
+
 article {
 	height: 90%;
 	width: 800px;
@@ -21,24 +21,9 @@ article {
 	padding: 10px;
 }
 
-.CompareShoes {
-  background-color: white;
-}
-#CompareShoes1{
+#CompareShoesList{
   float: left;
   margin-left: 14%;
-  margin-top: 100px;
-  display: inline-block;
-  width: 350px;
-	height: 400px;
-	text-align: center;
-	vertical-align: middle;
-  border: 1px solid black;
-}
-
-#CompareShoes2{
-  float: right;
-  margin-right: 14%;
   margin-top: 100px;
   display: inline-block;
   width: 350px;
@@ -57,13 +42,17 @@ article {
   display: inline;
 }
 
-#MyShoes1_image {
+#MyShoes_image {
   float: left;
   margin-left: 14%;
   display: inline;
 }
-#MyShoes2_image {
-  float: right;
-  margin-right: 14%;
-  display: inline;
+
+#MyShoesList {
+	min-width: 6%;
+	max-height: 10%;
+	border: 1px solid black;
+}
+#CheckSizeButton {
+	
 }

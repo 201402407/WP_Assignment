@@ -7,7 +7,7 @@ window.onload = function() {
   document.getElementById("LoginButton").onclick = function() {
     location.href = "loginpage.jsp"; // 로그인 페이지로 이동.
   }
-
+  
   // 사이즈 확인 버튼 누르면.
   document.getElementById("CheckSizeButton").onclick = function() {
     location.href = "sizecheckpage.html"; // 사이즈 확인 페이지로 이동.
@@ -20,5 +20,10 @@ window.onload = function() {
 
   document.getElementById("MakerHomepageButton").onclick = function() {
     location.href = "makerhomepage.html"; // 제조사 홈페이지 링크 목록 페이지로 이동.
+  }
+
+  if (window.sessionStorage) {
+	  
+      sessionStorage.setItem('LoginID', $(".loginID").id);
   }
 }

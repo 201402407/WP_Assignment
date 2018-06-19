@@ -40,7 +40,8 @@ function size_220_to_280_5unit(shoes_order) {
 		
 		 $(name).append($('<option>', {
 			 text: i,
-			 value: i
+			 value: i,
+			 id: i,
 		 }));	 
 	}
 }

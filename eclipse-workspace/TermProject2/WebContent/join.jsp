@@ -29,6 +29,7 @@
   String Shoes2_size = request.getParameter("shoes2_size");
   String LoginFilePath = request.getSession().getServletContext().getRealPath("/member/");
   String ShoesFilePath = request.getSession().getServletContext().getRealPath("/sizelist/");
+  String ShoesCartPath = request.getSession().getServletContext().getRealPath("/membercart/");
   String msg = "";
   
 	File MemberList = new File(LoginFilePath); //경로생성
@@ -147,6 +148,22 @@
 		}
  	}
  	
+	/*	// 찜 목록 파일 추가.
+ 	File MemberCartList = new File(ShoesCartPath); //경로생성
+	if (!MemberCartList.exists()) {
+    MemberCartList.mkdirs(); //상위 디렉토리가 존재하지 않으면 상위디렉토리부터 생성.
+  }
+	File MemberCart = new File(ShoesCartPath + "\\" + ID); // 파일 객체 생성
+	if(!MemberCart.exists()) { // 삽입.
+		MemberCart.createNewFile(); //파일 생성
+		PrintWriter pw = new PrintWriter(new FileWriter(MemberCart));
+		pw.println("Shoes:" + Shoes1); // 파일에 현재 ID의 주인이 정한 신발 1개 쓰기.
+		pw.println("Shoes:" + Shoes1_size); // 파일에 현재 ID의 주인이 정한 신발 1개 쓰기.
+		pw.println("Shoes2:" + Shoes2); // 파일에 현재 ID의 주인이 정한 신발 1개 쓰기.
+		pw.println("Shoes2 size:" + Shoes2_size); // 파일에 현재 ID의 주인이 정한 신발 1개 쓰기.
+		pw.flush(); // 파일에 기록. 여기까지가 입력 첫 줄.
+		pw.close(); // FileWriter 닫기 
+	} */
     msg = "mainpage.jsp?msg=1"; // mainpage 출력을 위한 뒤의 값 설정.
     session.setAttribute("sessionID", ID); // session에 데이터 저장.
     out.println(msg);

@@ -26,8 +26,12 @@
   
       else{
         %>
-        <span><h2><%=session.getAttribute("sessionID") %> 님, 환영합니다!</h2></span>
+        
+        <span class="loginID" id="<%=session.getAttribute("sessionID") %>">
+        <h2><%=session.getAttribute("sessionID") %> 님, 환영합니다!</h2>
+        </span>
         <%
+       	
       }
    %>
    <!-- 로그인 버튼 -->

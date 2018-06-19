@@ -30,7 +30,6 @@ $(document).ready(function(){
 		  		  if(success) { // 전송 완료 시.
 		  			var str = ajax_receive_WhiteSpace_delete(success);
 		  			var i = 0;
-		  			var $temp;
 		  			console.log(success);
 		  			if(str[0] == "duplication") { // 중복 아이디가 있을 경우.
 		  				$(".checkName").attr("id", "DuplicationCheck_Fail");
