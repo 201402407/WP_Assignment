@@ -13,7 +13,7 @@ $(document).ready(function(){
 	
 	$("#CheckID").click(function(){ // 중복 체크 검사.
 		 jQuery.ajaxSettings.traditional = true;
-		  	console.log("1");
+		  	
 		  	$.ajaxSetup({
 		  	    scriptCharset: "utf-8",
 		  	    contentType: "application/json; charset=utf-8"
@@ -23,7 +23,7 @@ $(document).ready(function(){
 		  	  type: 'get',
 		  	  url: "./namecheck.jsp",
 		  	  data:  {
-		  		  	"Duplication_CheckingID": document.getElementById("join_name")
+		  		  	"Duplication_CheckingID": $("#join_name").val()
 		  		  },
 		  	  dataType : "text",
 		  	  success: function(success) {
@@ -31,7 +31,7 @@ $(document).ready(function(){
 		  			var str = ajax_receive_WhiteSpace_delete(success);
 		  			var i = 0;
 		  			var $temp;
-		  			
+		  			console.log(success);
 		  			if(str[0] == "duplication") { // 중복 아이디가 있을 경우.
 		  				$(".checkName").attr("id", "DuplicationCheck_Fail");
 		  				$(".checkName").text("이미 존재하는 아이디 입니다.");

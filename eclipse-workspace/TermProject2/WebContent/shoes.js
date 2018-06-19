@@ -37,7 +37,7 @@ function size_220_to_280_5unit(shoes_order) {
 	delete_option(shoes_order);
 	var name = "#shoes" + shoes_order + "_size";
 	for(var i = 220; i <= 280; i = i + 5) {
-		console.log(i);
+		
 		 $(name).append($('<option>', {
 			 text: i,
 			 value: i

@@ -19,8 +19,8 @@
       File[] fileList = MemberList.listFiles();
       for (int j = 0; j < fileList.length; j++) {
         if(fileList[j].isFile()) { // 혹시몰라 파일 존재확인.
-          String MemberName = fileList[j].getName();
-          if(MemberName == ID) { // 존재하면 로그인.
+          String MemberName = fileList[j].getName();          
+          if(MemberName.equals(ID)) { // 존재하면 로그인.   
             msg = "duplication"; // mainpage 출력을 위한 뒤의 값 설정.
             break;
           }

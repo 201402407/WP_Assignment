@@ -27,12 +27,14 @@
             // 아이디, 비밀번호가 틀릴경우 화면에 메시지 표시
             // login.jsp에서 로그인 처리 결과에 따른 메시지를 보낸다.
             String msg = request.getParameter("msg");
-
+			
             if(msg != null && msg.equals("0"))
             {
               out.println("<span id=\'notId\'>해당 아이디가 존재하지 않습니다.</span>");
-            }
+           }
+    		
         %>
+        
       <input type="submit" id="SubmitLogin" value="로그인"> <br />
      </form>
      <!-- 회원가입 버튼 -->
