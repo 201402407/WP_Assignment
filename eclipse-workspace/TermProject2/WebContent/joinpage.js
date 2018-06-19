@@ -3,11 +3,14 @@ window.onload = function() {
   document.getElementById("main_header_click").onclick = function() {
     location.href = "mainpage.jsp";
   }
-
+  //$(".reset_textarea").append("<input type="text" name="search_shoes2" id="search_shoes2">");
   
+  $.getScript('./shoes.js');
 }
 
 $(document).ready(function(){
+	
+	
 	$("#CheckID").click(function(){ // 중복 체크 검사.
 		 jQuery.ajaxSettings.traditional = true;
 		  	console.log("1");
@@ -149,11 +152,15 @@ $(document).ready(function(){
             minLength:1,               //1글자 이상 입력해야 autocomplete이 작동한다.
             delay:100,  
         select: function( event, ui ) {
-            // 만약 검색리스트에서 선택하였을때 선택한 데이터에 의한 이벤트발생
+        	var obj = shoes_img(ui.item.value);
+  			$("#shoes1_img").attr("src", obj.src);
+  			$("#shoes1_img").attr("alt", obj.alt);
+  			shoes_size_option(ui.item.value, 1);
+            // 만약 검색리스트에서 선택하였을때 선택한 데이터에 의한 이벤트발생. 이미지만.
         }
     });
 	
-	$('#shoes1_size').click(function () {
+	/*$('#shoes1_size').click(function () {
     	if($("#search_shoes1").val() != null) {
 		console.log('마우스가 영역에 들어왔습니다!');
 		
@@ -164,7 +171,7 @@ $(document).ready(function(){
 		  	    contentType: "application/json; charset=utf-8"
 		  	});
 		  	
-		  	$.ajax({ // 서버 데이터 전부 삭제.
+		  	$.ajax({ 
 		  	  type: 'get',
 		  	  url: "./ShoesNameList.txt",
 		  	  dataType : "text",
@@ -174,6 +181,12 @@ $(document).ready(function(){
 		  			for(var i = 0; i < str.length; i++) { 
 		  				str[i] = String_WhiteSpace_delete(str[i]);
 		  	    		if($("#search_shoes1").val() == str[i]) {
+		  	    			var obj = shoes_img($("#search_shoes1").val());
+		  	    			
+		  	    			$("#shoes1_img").attr("src", obj.src);
+		  	    			$("#shoes1_img").attr("alt", obj.alt);
+		  	    			if(size1_first.next() == null) {}
+		  	    				shoes_size_option($("#search_shoes1").val(), 1);
 		  	    			// 다른 jsp나 js로 넘어가서 해당 신발에 대한 함수 실행.
 		  	    			// 그 함수는 해당 신발에 대한 사이즈 option tag 추가.
 		  	    			// 및 신발 사진도 추가. ( select하면 그 때 바로 추가.)
@@ -197,7 +210,7 @@ $(document).ready(function(){
 		  	  }
 		  	});
     	}
-	});
+	}); */
 	
 	
 	$("#search_shoes2").autocomplete({ // 신발 첫 번째 자동완성 기능.
@@ -247,14 +260,24 @@ $(document).ready(function(){
             // 만약 검색리스트에서 선택하였을때 선택한 데이터에 의한 이벤트발생
         	if($("#search_shoes1").val() == ui.item.value) {
         		alert("같은 신발을 선택하셨습니다. 다른 신발을 골라주세요.");
+        		$("#reset_textarea2").children().first().remove();
+        		$("#reset_textarea2").append("<input type='text' name='search_shoes2' id='search_shoes2'>");
         		document.getElementById("search_shoes2").value = null;
         		
         		return;
         	}
+        	else{
+        		
+        		var obj = shoes_img(ui.item.value);
+      			$("#shoes2_img").attr("src", obj.src);
+      			$("#shoes2_img").attr("alt", obj.alt);
+      			shoes_size_option(ui.item.value, 2);
+        	}
+        	
         }
     });
 
-	$('#shoes2_size').click(function () {
+	/*$('#shoes2_size').click(function () {
     	if($("#search_shoes2").val() != null) {
 		console.log('마우스가 영역에 들어왔습니다!');
 		
@@ -304,7 +327,7 @@ $(document).ready(function(){
 		  	  }
 		  	});
     	}
-	});
+	}); */
 })
 
 function String_WhiteSpace_delete(string) { // 문자열 양 끝 공백 제거.
