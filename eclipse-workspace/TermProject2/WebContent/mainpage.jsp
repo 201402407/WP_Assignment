@@ -14,9 +14,7 @@
 </head>
 <body>
   <!-- 홈페이지의 홈버튼. 홈페이지 제목 -->
-   <div id="main_header_click">
    <img alt="not valid" src="./img/mainlogo.jpg" id="main_header">
-   </div>
    <%
       if(session.getAttribute("sessionID") == null) {
         %>

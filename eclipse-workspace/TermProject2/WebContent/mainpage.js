@@ -1,6 +1,6 @@
 window.onload = function() {
   // 홈페이지 제목 (메인메뉴가기) 누르면.
-  document.getElementById("main_header_click").onclick = function() {
+  document.getElementById("main_header").onclick = function() {
     location.href = "mainpage.jsp"; // 메인 페이지로 이동.
   }
   // 로그인 버튼 누르면.
@@ -10,7 +10,7 @@ window.onload = function() {
   
   // 사이즈 확인 버튼 누르면.
   document.getElementById("CheckSizeButton").onclick = function() {
-    location.href = "sizecheckpage.html"; // 사이즈 확인 페이지로 이동.
+    location.href = "sizecheckpage.jsp"; // 사이즈 확인 페이지로 이동.
   }
 
   // 신발 별 착샷 버튼 누르면.
@@ -21,7 +21,10 @@ window.onload = function() {
   document.getElementById("MakerHomepageButton").onclick = function() {
     location.href = "makerhomepage.html"; // 제조사 홈페이지 링크 목록 페이지로 이동.
   }
-
+  
+  window.name = $(".loginID").id;
+  console.log($(".loginID").id);
+  console.log(window.name);
   if (window.sessionStorage) {
 	  
       sessionStorage.setItem('LoginID', $(".loginID").id);

@@ -1,17 +1,36 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
 <html lang="ko">
 <head>
   <meta charset="utf-8">
   <title>슈즈 사이즈 닷컴</title>
-  <link rel="stylesheet" type="text/css" href="sizecheckpage.css?ver=1">
+  <link rel="stylesheet" type="text/css" href="sizecheckpage.css">
   <script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
   <script src="http://code.jquery.com/ui/1.8.23/jquery-ui.min.js"></script>
-  <script src="sizecheckpage.js?ver=1"></script>
+  <script src="sizecheckpage.js"></script>
 </head>
 <body>
   <!-- 홈페이지의 홈버튼. 홈페이지 제목 -->
    <div id="main_header_click">
    <img alt="not valid" src="./img/mainlogo.jpg" id="main_header">
+   <%
+      if(session.getAttribute("sessionID") == null) {
+        %>
+          <span id="LoginNeedMessage"> 로그인이 필요합니다.</span>
+        <%
+      }
+  
+      else{
+        %>
+        
+        <span id="loginID" value="<%=session.getAttribute("sessionID") %>">
+        <h2><%=session.getAttribute("sessionID") %> 님, 환영합니다!</h2>
+        </span>
+        <%
+       	
+      }
+   %>
    </div>
    <!-- 사용자의 신발 사이즈 출력 -->
    <article class="MyShoesSize_block">
@@ -40,3 +59,4 @@
       </article>
 </body>
 </html>
+<% out.println(session.getAttribute("sessionID") + "님"); %>
