@@ -4,22 +4,18 @@ window.onload = function() {
     location.href = "mainpage.jsp"; // 메인 페이지로 이동.
   }
   // 로그인 버튼 누르면.
-  document.getElementById("LoginButton").onclick = function() {
-    location.href = "loginpage.jsp"; // 로그인 페이지로 이동.
-  }
   
   // 사이즈 확인 버튼 누르면.
   document.getElementById("CheckSizeButton").onclick = function() {
     location.href = "sizecheckpage.jsp"; // 사이즈 확인 페이지로 이동.
   }
-
+  
+  document.getElementById("JoinButton").onclick = function() {
+	  location.href = "joinpage.html";
+  }
   // 신발 별 착샷 버튼 누르면.
   document.getElementById("InstgramButton").onclick = function() {
     location.href = "searchpage.html"; // 신발 별 착샷 페이지로 이동.
-  }
-
-  document.getElementById("MakerHomepageButton").onclick = function() {
-    location.href = "makerhomepage.html"; // 제조사 홈페이지 링크 목록 페이지로 이동.
   }
   
   window.name = $(".loginID").id;
@@ -29,4 +25,9 @@ window.onload = function() {
 	  
       sessionStorage.setItem('LoginID', $(".loginID").id);
   }
+}
+
+function Login(){
+	    location.href = "loginpage.jsp"; // 로그인 페이지로 이동.
+	  
 }

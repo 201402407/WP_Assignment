@@ -1,25 +1,139 @@
 #main_header {
-    margin-top: 30px;
+    
     width:240px;
     height:50px;
-    margin-left: 10%;
-    margin-bottom: 4%;
+    margin-bottom: 3%;
     cursor: pointer;
     display: inline-block;
+    float: left;
 }
 
+body {
+	width: 80%;
+	min-height: 1000px;
+	height: 100%;
+	margin-left: 10%;
+	margin-right: 10%;
+}
 
-#LoginButton, .LoginButton {
-  margin-top: 100px;
-  height: 50px;
-  line-height: 20px;
-  text-align: center;
-  width: 300px;
-  border: 1px solid black;
-  font-family: helvetica, serif;
-  margin: 0 auto;
-  margin-bottom: 50px;
-  cursor: pointer;
+#header{
+	margin-top: 5%;
+	min-height: 50px;
+	height: auto;
+	display: inline-block;
+	width: 100%;
+	margin-bottom: -2%;
+}
+
+.main_button {
+	border: 0;
+	outline: 0;
+	background-color: white;
+	color: gray;
+	font-family: helvetica, serif;
+	width: 10%;
+	height: auto;
+	float: right;
+	margin-top: 2.5%;
+	cursor: pointer;
+}
+
+.MenuButton {
+	width: 100%;
+	height: 31px;
+	background-color: #0C443E;
+	display: block;
+	margin-top: 2%;
+	
+}
+
+h6 {
+	display: none;
+}
+#imgArea {
+	width: 100%;
+	height: 100%;
+	display: inline-block;
+}
+
+.MainShoesImg {
+	width: 200px;
+	height: 200px;
+	margin-left: 3%;
+	margin-right: 3%;
+	margin-top: 5%;
+	display: inline-block;
+	 
+}
+.menubar {
+	display: inline-block;
+	width: 16.1%;
+	height: 31px;
+	float: left;
+	color: white;
+	cursor: pointer;
+	margin: 2px;
+	text-align: center;
+}
+
+#sandle {
+	cursor: pointer;
+}
+
+#gudu {
+	cursor: pointer;
+}
+
+#boots {
+	cursor: pointer;
+}
+
+#walker {
+	cursor: pointer;
+}
+
+#theothers {
+	cursor: pointer;
+}
+.mainLine{
+	float: left;
+	width: 100%;
+	height: 2px;
+	background-color: #0C443E;
+	border-right: 2px solid #0C443E;
+}
+
+#NowLogin {
+	float: right;
+	color: black;
+	font-size: 14px;
+	margin-top: 2.3%;
+}
+
+#main_footer {
+	width: 100%;
+	margin-top: 99%;
+	height: 100px;
+}
+#bestItem_text {
+	height: 30px;
+	font-size: 18px;
+	float: left;
+	color: #0C443E;
+	margin-top: 10%;
+	margin-bottom: 10px;
+	font-family: "°íµñ";
+	text-indent: 2%;
+}
+
+#Search_shoes {
+	border-radius: 20px;
+	border: 1px solid #0C443E;
+	width: 27%;
+	height: 27px;
+	float: right;
+	margin-top: 18px;
+	text-indent: 10px;
 }
 
 #LoginNeedMessage {
@@ -30,50 +144,11 @@
 	font-family: non-serif;
 }
 
-#CheckSizeButton, .CheckSizeButton {
-  height: 80px;
-  line-height: 20px;
-  text-align: center;
-  width: 400px;
-  border: 1px solid black;
-  font-weight: bold;
-  font-family: "ê³ ë”•";
-  margin: 0 auto;
-  margin-bottom: 50px;
-  cursor: pointer;
-}
-
-#MakerHomepageButton, .MakerHomepageButton {
-  height: 50px;
-  line-height: 20px;
-  text-align: center;
-  width: 300px;
-  border: 1px solid black;
-  font-family: helvetica, serif;
-  margin: 0 auto;
-  margin-bottom: 50px;
-  cursor: pointer;
-}
-
-#InstgramButton, .InstgramButton {
-  height: 50px;
-  line-height: 20px;
-  text-align: center;
-  width: 300px;
-  border: 1px solid black;
-  font-family: helvetica, serif;
-  margin: 0 auto;
-  margin-bottom: 50px;
-  cursor: pointer;
-}
-
-#CartShoesButton, .CartShoesButton {
-  height: 50px;
-  line-height: 20px;
-  text-align: center;
-  width: 300px;
-  border: 1px solid black;
-  font-family: helvetica, serif;
-  margin: 0 auto;
-  cursor: pointer;
+.icon{
+  position: absolute;
+  top: 50%;
+  margin-left: 17px;
+  margin-top: 17px;
+  z-index: 1;
+  color: #4f5b66;
 }
