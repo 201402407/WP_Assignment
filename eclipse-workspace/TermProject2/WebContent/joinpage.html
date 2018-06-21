@@ -3,16 +3,19 @@
 <head>
   <meta charset="utf-8">
   <title>슈즈 사이즈 닷컴</title>
-  <link rel="stylesheet" type="text/css" href="joinpage.css">
+  <link rel="stylesheet" type="text/css" href="joinpage.css?=ver1">
   <script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
   <script src="http://code.jquery.com/ui/1.8.23/jquery-ui.min.js"></script>
-  <script src="joinpage.js?ver=1"></script>
+  <script src="joinpage.js?=ver1"></script>
 </head>
 <body><!-- 홈페이지의 로고 및 메뉴 바 -->
    <div id="header">
   	 <img alt="not valid" src="./img/mainlogo.jpg" id="main_header">
+  	 <!-- 로그인 버튼 -->
+   <button type="button" class="main_button" id="JoinButton">회원가입</button>
+   <button class="main_button" id="LoginButton">로그인</button>
    </div>   
-   <!-- 로그인 버튼 -->
+   <!-- 메뉴 버튼 -->
    <article class="MenuButton">
   		<div class="menubar" id="sports">운동화</div>
    		<div class="menubar" id="gudu">구두</div>
@@ -21,36 +24,34 @@
   	 	<div class="menubar" id="walker">워커</div>
   	 	<div class="menubar" id="theothers">기타</div>
      </article>
-   <!-- 회원가입 하기위한 작성 text들 -->
-   <article class="join">
+    <!-- 회원가입 하기위한 작성 text들 -->
+   <article id="Join_area">
   <!-- <form class="join_form" action="join.jsp" method="post"> -->
-     <div id="join_name_block">아이디 : <input type="text" name="join_name" id="join_name" placeholder="한글도 가능합니다.">
-     	<button type="button" name="CheckID" id="CheckID">아이디 중복검사</button><br />
+     <div id="join_name_block">아이디 <input type="text" name="join_name" id="join_name" placeholder="한글도 가능합니다.">
+     	<button type="button" name="CheckID" id="CheckID">중복검사</button><br />
      	<span class='checkName'></span>
      </div>
-     <div id="join_select_block">일상 생활에 불편없는 신발 선택(2) </div>
       <!-- 신발 검색 후 선택하기 위한 텍스트 입력 창 -->
      <div class="reset_textarea" id="reset_textarea1">
-     <input type="text" name="search_shoes1" id="search_shoes1" placeholder="자동완성된 목록 중에서 선택하세요.">
-     </div>
-     <select name="shoes1_size" class="shoes_size_select" id="shoes1_size">
+     신발 1 <input type="text" class="search_shoes" id="search_shoes1" placeholder="자동완성된 목록 중에서 선택하세요.">
+  	<select name="shoes1_size" class="shoes_size_select" id="shoes1_size">
      	<option class="size_first" id="size1_first" value="All" selected disabled hidden>사이즈</option>
      </select>
      
-     <div class="reset_textarea" id="reset_textarea2">
-     <input type="text" name="search_shoes2" id="search_shoes2" placeholder="자동완성된 목록 중에서 선택하세요.">
      </div>
+     <div class="reset_textarea" id="reset_textarea2">
+     신발 2 <input type="text" class="search_shoes" id="search_shoes2" placeholder="자동완성된 목록 중에서 선택하세요.">
      <select name="shoes2_size" class="shoes_size_select" id="shoes2_size">
      	<option class="size_first" id="size2_first" value="All" selected disabled hidden>사이즈</option>
      </select>
-      
+     </div>
+     <!-- 현재 데이터 저장된 신발 이미지 출력하는 공간 --> 
 	 <div id="shoes_img_area">
 	 <img alt="" src="" id="shoes1_img" class="shoes_img">
 	 <img alt="" src="" id="shoes2_img" class="shoes_img">
 	 </div>
-     <!-- 현재 데이터 저장된 상품 리스트 출력하는 공간 -->
-     <button type="button" name="Join" id="Join">가입하기</button>
 	<!-- </form> -->
    </article>
+   <button type="button" name="Join" id="Join">가입하기</button>
  </body>
 </html>

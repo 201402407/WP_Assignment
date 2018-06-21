@@ -30,7 +30,7 @@ body {
 	outline: 0;
 	background-color: white;
 	color: gray;
-	font-family: helvetica, serif;
+	font-family : sans-serif;
 	width: 10%;
 	height: auto;
 	float: right;
@@ -112,6 +112,7 @@ h6 {
   border: 1px solid black;
   margin: 0 auto;
   background-color: white;
+  
 }
 #Login_header {
   margin-top: 20px;
@@ -127,23 +128,23 @@ h6 {
   margin-bottom: 15px;
   display: inline-block;
   margin-left: 10%;
-}
-
-#SubmitLogin {
-  background-color: #0C443E;
-  margin-left: 20%;
   
 }
-
 #LoginID {
 	text-indent: 5px;
 	height: 24px;
 	border: 0.5px solid #0C443E;
 }
+#SubmitLogin {
+  background-color: #0C443E;
+  margin-left: 20%;
+  
+}
 #JoinButton2 {
   background-color: #F47C4F;
   margin-left: 66.5%; 
 }
+
 .button_click {
   
   height: 35px;

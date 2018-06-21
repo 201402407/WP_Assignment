@@ -1,14 +1,20 @@
 window.onload = function() {
-  document.getElementById("main_header_click").onclick = function() {
+  document.getElementById("main_header").onclick = function() {
     location.href = "mainpage.jsp";
   }
-  
+  document.getElementById("JoinButton").onclick = function() {
+	  location.href = "joinpage.html";
+  }
   $.getScript('./shoes.js');
-  console.log($("#loginID").val());
+  
 }
 
-
+function login(){
+    location.href = "loginpage.jsp"; // 로그인 페이지로 이동.  
+}
 $(document).ready(function(){
+	
+	
 	$("#CheckSizeButton").click(function() {
 		var ID;
 		jQuery.ajaxSettings.traditional = true;
@@ -24,11 +30,23 @@ $(document).ready(function(){
 		  	  success: function(success) {
 		  		  if(success) { // 전송 완료 시.
 		  			var str = ajax_receive_WhiteSpace_delete(success); // 회원가입시 저장된 순서로 정보 받음.
-		  			var i = str.length;
-		  			console.log(str[--i]);
-		  			ID = str[i].substring(0, str[i].indexOf("님"));
-		  			console.log(ID);
+		  			var i = 0;
 		  			
+		  			while(i < str.length) {
+		  				
+		  				if(str[i].indexOf(" 님") != -1) {
+		  					
+		  					console.log(str[i]);
+		  					ID = str[i].substring(0, str[i].indexOf(" 님"));
+		  					console.log(ID);
+		  					ID = ID.substring(ID.indexOf(">") + 1);
+		  					console.log(ID);
+		  					break;
+		  				}
+		  				i++;
+		  				continue;
+		  			}
+		  			console.log(ID);
 		  		  }
 		  		  else {
 		  			  alert("잠시 후에 시도해주세요.");
@@ -56,7 +74,9 @@ $(document).ready(function(){
 		  			  
 		  			var str = ajax_receive_WhiteSpace_delete(success); // 회원가입시 저장된 순서로 정보 받음.		  			
 		  			
-		  			console.log(str[0] + " 사이즈가 가장 알맞습니다.");
+		  			console.log("추천 사이즈 : " + str[0]);
+		  			var result = "추천 사이즈 : " + str[0];
+		  			$("#CheckShoes_result").text(result);
 		  		  }
 		  		  else {
 		  			  alert("잠시 후에 시도해주세요.");

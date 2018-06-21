@@ -5,58 +5,91 @@
 <head>
   <meta charset="utf-8">
   <title>슈즈 사이즈 닷컴</title>
-  <link rel="stylesheet" type="text/css" href="sizecheckpage.css">
+  <link rel="stylesheet" type="text/css" href="sizecheckpage.css?ver=1">
   <script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
   <script src="http://code.jquery.com/ui/1.8.23/jquery-ui.min.js"></script>
-  <script src="sizecheckpage.js"></script>
+  <script src="sizecheckpage.js?ver=1"></script>
 </head>
 <body>
-  <!-- 홈페이지의 홈버튼. 홈페이지 제목 -->
-   <div id="main_header_click">
-   <img alt="not valid" src="./img/mainlogo.jpg" id="main_header">
-   <%
+  <!-- 홈페이지의 로고 및 메뉴 바 -->
+   <div id="header">
+  	 <img alt="not valid" src="./img/mainlogo.jpg" id="main_header">
+  	 <%
       if(session.getAttribute("sessionID") == null) {
         %>
-          <span id="LoginNeedMessage"> 로그인이 필요합니다.</span>
+          <button type="button" class="main_button" id="JoinButton">회원가입</button>
+          <button class="main_button" id="LoginButton" onclick="login();">로그인</button>
         <%
       }
   
       else{
         %>
-        
-        <span id="loginID" value="<%=session.getAttribute("sessionID") %>">
-        <h2><%=session.getAttribute("sessionID") %> 님, 환영합니다!</h2>
+        <button type="button" class="main_button" id="JoinButton">회원가입</button>
+        <span id="NowLogin"><%=session.getAttribute("sessionID") %> 님, 환영합니다!</span>
         </span>
         <%
-       	
       }
    %>
+  	
+   
    </div>
+   
+   <!-- 로그인 버튼 -->
+   <article class="MenuButton">
+  		<div class="menubar" id="sports">운동화</div>
+   		<div class="menubar" id="gudu">구두</div>
+  	 	<div class="menubar" id="sandle">샌들</div>
+  	 	<div class="menubar" id="boots">부츠</div>
+  	 	<div class="menubar" id="walker">워커</div>
+  	 	<div class="menubar" id="theothers">기타</div>
+     </article>
    <!-- 사용자의 신발 사이즈 출력 -->
-   <article class="MyShoesSize_block">
-     <button id="MemberCartShoes_Button"><h1>찜목록 신발 불러오기</h1></button>
-     <button id="MemberJoinShoes_Button"><h1>회원가입시 저장한 신발 불러오기</h1></button>
-     <div id="MyShoesList"></div>
-    <input type="text" name="shoes_name" id="shoes_name" placeholder="검색할 신발을 입력하세요.">
-     <!-- 첫 번째 신발 -->
+   <article class="ShoesSizeCheck_block">
        <!-- 신발 사진 출력 -->
-       <div class="MyShoes_image" id="MyShoes_image">
-       </div>
+       <!-- <div class="CheckShoes_image" id="CheckShoes_image"> -->
+       <%
+       if(request.getParameter("send_data") != null) {
+    	   String data = request.getParameter("send_data");
+    	   String name = data.substring(0, data.indexOf("_"));
+    	   String src = "./shoesimage/" + name + ".jpg";
+    	  
+    	   %>
+    	   <img alt="not valid" src="<%=src %>" class="CheckShoes_image" id="CheckShoes_img">
+    	   <%
+       }
+       %>
+       
+       <!-- </div> -->
+       
        <!-- 신발 이름 출력 -->
-       <div class="MyShoes_name" id="MyShoes_name">
+       <div class="CheckShoes_info" id="CheckShoes_name">
+       <% // 신발명과 신발 가격 받기.
+       if(request.getParameter("send_data") != null) {
+    	   String data = request.getParameter("send_data");
+    	   String name = data.substring(0, data.indexOf("_"));
+    	   %>
+    	   	제품명: <%= name %>
+    	   <%
+       }
+       %>
        </div>
-       <!-- 사이즈 입력 -->
-       <select name="shoes_size" class="shoes_size_select" id="shoes1_size">
-     	<option class="size_first" id="size1_first" value="All" selected disabled hidden>사이즈</option>
-     </select>
-       <button id="CheckSizeButton"><h1>실착사이즈가 맞는 신발 보기</h1></button>
-     <div class="mainLine"></div>
-      <!-- 사용자가 선택한 신발과 사이즈가 같은 신발들 이름 리스트 -->
-      <div class="CompareShoes" id="CompareShoesList">
-      </div>
-      <div class="CompareShoes_image" id="CompareShoes_image">
+       <!-- 신발 가격 출력 -->
+       <div class="CheckShoes_info" id="CheckShoes_price">
+       <%
+       if(request.getParameter("send_data") != null) {
+    	   String data = request.getParameter("send_data");
+    	   String price = data.substring(data.indexOf("_") + 1);
+    	   %>
+    	   <%= price %> 원
+    	   <%
+       }
+       %>
+       
        </div>
+       <button id="CheckSizeButton">나에게 맞는 사이즈 찾기</button>
+       <div class="CheckShoes_info" id="CheckShoes_result">
+       </div>
+      
       </article>
 </body>
 </html>
-<% out.println(session.getAttribute("sessionID") + "님"); %>

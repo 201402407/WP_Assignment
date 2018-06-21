@@ -1,10 +1,17 @@
 window.onload = function() {
   // 홈페이지 제목 (메인메뉴가기) 누르면.
-  document.getElementById("main_header_click").onclick = function() {
+  document.getElementById("main_header").onclick = function() {
     location.href = "mainpage.jsp";
   }
   //$(".reset_textarea").append("<input type="text" name="search_shoes2" id="search_shoes2">");
   
+  document.getElementById("JoinButton").onclick = function() {
+	  location.href = "joinpage.html";
+  }
+  
+  document.getElementById("LoginButton").onclick = function() {
+	  location.href = "loginpage.jsp";
+  }
   $.getScript('./shoes.js');
 }
 
@@ -159,57 +166,7 @@ $(document).ready(function(){
         }
     });
 	
-	/*$('#shoes1_size').click(function () {
-    	if($("#search_shoes1").val() != null) {
-		console.log('마우스가 영역에 들어왔습니다!');
-		
-			jQuery.ajaxSettings.traditional = true;
-		  	
-		  	$.ajaxSetup({
-		  	    scriptCharset: "utf-8",
-		  	    contentType: "application/json; charset=utf-8"
-		  	});
-		  	
-		  	$.ajax({ 
-		  	  type: 'get',
-		  	  url: "./ShoesNameList.txt",
-		  	  dataType : "text",
-		  	  success: function(success) {
-		  		  if(success) { // 전송 완료 시.
-		  			var str = success.split("\n");
-		  			for(var i = 0; i < str.length; i++) { 
-		  				str[i] = String_WhiteSpace_delete(str[i]);
-		  	    		if($("#search_shoes1").val() == str[i]) {
-		  	    			var obj = shoes_img($("#search_shoes1").val());
-		  	    			
-		  	    			$("#shoes1_img").attr("src", obj.src);
-		  	    			$("#shoes1_img").attr("alt", obj.alt);
-		  	    			if(size1_first.next() == null) {}
-		  	    				shoes_size_option($("#search_shoes1").val(), 1);
-		  	    			// 다른 jsp나 js로 넘어가서 해당 신발에 대한 함수 실행.
-		  	    			// 그 함수는 해당 신발에 대한 사이즈 option tag 추가.
-		  	    			// 및 신발 사진도 추가. ( select하면 그 때 바로 추가.)
-		  	    			return;	
-		  	    		}
-		  	    	}
-		  			document.getElementById("search_shoes1").value = null;
-		  			alert("해당 신발이 존재하지 않습니다. 다시 입력해주세요.");
-		  			return;
-		  		  }
-		  		  else {
-		  			  alert("잠시 후에 시도해주세요.");
-		  		  }
-		  	  },
-		  	  error: function(xhr, request,error) {
-		  		
-		  		  alert("join failed");
-		  		  alert(xhr.status);
-		  		  alert("message:"+request.responseText);
-		  		  
-		  	  }
-		  	});
-    	}
-	}); */
+
 	
 	
 	$("#search_shoes2").autocomplete({ // 신발 첫 번째 자동완성 기능.

@@ -122,7 +122,7 @@
 	 
 	// 가장 count(순위)가 높은 신발 데이터 전송.
 	if(map.size() == 0) {
-		out.println("없음");
+		out.println(Shoes1Size);
 	}
 	else{
 		Iterator<String> it = sortByValue(map).iterator();
