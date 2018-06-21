@@ -7,8 +7,8 @@
   <!-- 탭 제목 -->
   <title>슈즈 사이즈 닷컴</title>
   <!-- css, js 링크 -->
-  <link rel="stylesheet" type="text/css" href="mainpage.css?ver=1">
-  <script src="mainpage.js?ver=1"></script>
+  <link rel="stylesheet" type="text/css" href="mainpage.css">
+  <script src="mainpage.js"></script>
   <script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
   <script src="http://code.jquery.com/ui/1.8.23/jquery-ui.min.js"></script>
 </head>

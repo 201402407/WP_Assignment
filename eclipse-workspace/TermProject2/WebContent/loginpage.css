@@ -1,14 +1,110 @@
 #main_header {
-    margin-top: 30px;
+    
     width:240px;
     height:50px;
-    margin-left: 180px;
-    margin-bottom: 30px;
+    margin-bottom: 3%;
     cursor: pointer;
+    display: inline-block;
+    float: left;
 }
 
+body {
+	width: 80%;
+	min-height: 1000px;
+	height: 100%;
+	margin-left: 10%;
+	margin-right: 10%;
+}
 
+#header{
+	margin-top: 5%;
+	min-height: 50px;
+	height: auto;
+	display: inline-block;
+	width: 100%;
+	margin-bottom: -2%;
+}
 
+.main_button {
+	border: 0;
+	outline: 0;
+	background-color: white;
+	color: gray;
+	font-family: helvetica, serif;
+	width: 10%;
+	height: auto;
+	float: right;
+	margin-top: 2.5%;
+	cursor: pointer;
+}
+
+.MenuButton {
+	width: 100%;
+	height: 31px;
+	background-color: #0C443E;
+	display: block;
+	margin-top: 2%;
+	
+}
+
+h6 {
+	display: none;
+}
+#imgArea {
+	width: 100%;
+	height: 100%;
+	display: inline-block;
+}
+
+.MainShoesImg {
+	width: 200px;
+	height: 200px;
+	margin-left: 3%;
+	margin-right: 3%;
+	margin-top: 5%;
+	display: inline-block;
+	 
+}
+.menubar {
+	display: inline-block;
+	width: 16.1%;
+	height: 31px;
+	float: left;
+	color: white;
+	cursor: pointer;
+	margin: 2px;
+	text-align: center;
+}
+
+#sandle {
+	cursor: pointer;
+}
+
+#gudu {
+	cursor: pointer;
+}
+
+#boots {
+	cursor: pointer;
+}
+
+#walker {
+	cursor: pointer;
+}
+
+#theothers {
+	cursor: pointer;
+}
+
+#LoginMenu {
+	margin-left: 18%;
+	margin-right: 50%;
+	margin-top: 11%;
+	width: 65%;
+	height: 250px;
+	background-color: #E8E6E6;
+	display: block;
+}
 
 .LoginButton {
   width: 400px;
@@ -23,42 +119,50 @@
   text-align: center;
 }
 #LoginID_css {
-  margin-top: 100px;
-  height: 50px;
-  line-height: 20px;
-  text-align: center;
-  font-family: helvetica, serif;
-  margin: 0 auto;
+  margin-top: 15%;
+  height: 30px;
+  line-height: 25px;
+  text-indent: 3px;
+  font-family : sans-serif;
   margin-bottom: 15px;
+  display: inline-block;
+  margin-left: 10%;
 }
 
 #SubmitLogin {
-  margin-top: 50px;
-  height: 50px;
-  line-height: 20px;
-  text-align: center;
-  width: 200px;
-  border: 1px solid black;
-  font-family: helvetica, serif;
-  margin-left: 25%;
-  cursor: pointer;
+  background-color: #0C443E;
+  margin-left: 20%;
+  
 }
 
-#JoinButton {
-    margin-top: 20px;
-    height: 50px;
-    line-height: 20px;
-    text-align: center;
-    width: 200px;
-    border: 1px solid black;
-    font-family: helvetica, serif;
-    margin-left: 25%;
-    cursor: pointer;
+#LoginID {
+	text-indent: 5px;
+	height: 24px;
+	border: 0.5px solid #0C443E;
+}
+#JoinButton2 {
+  background-color: #F47C4F;
+  margin-left: 66.5%; 
+}
+.button_click {
+  
+  height: 35px;
+  line-height: 25px;
+  text-align: center;
+  width: 20%;
+  margin-right: 2%;
+  cursor: pointer;
+  display: inline-block;
+  border: 0;
+  outline: 0;
+  color: white;
+  font-family : sans-serif;
+  font-size: 100%;
 }
 
 #notId {
 	margin-left: 10px;
 	font-weight: bold;
-	font-size: 20px;
+	font-size: 15px;
 	color: red;
 }
